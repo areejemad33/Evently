@@ -1,0 +1,47 @@
+import 'package:evently_app/core/resources/colors_manager.dart';
+import 'package:evently_app/core/widgets/tab_item.dart';
+import 'package:evently_app/model/category_model.dart';
+
+import 'package:flutter/material.dart';
+
+class CustomTabBar extends StatefulWidget {
+   CustomTabBar({super.key, required this.categories});
+List<CategoryModel> categories;
+  @override
+  State<CustomTabBar> createState() => _CustomTabBarState();
+}
+
+class _CustomTabBarState extends State<CustomTabBar> {
+  int selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return  DefaultTabController(
+      length: widget.categories.length,
+      child: TabBar(
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        tabAlignment: TabAlignment.start,
+        isScrollable: true,
+        dividerColor: Colors.transparent,
+        indicatorColor: Colors.transparent,
+        tabs: widget.categories
+            .map(
+              (category) => TabItem(
+            category: category,
+            selectedBgColor: ColorsManager.blue,
+            selectedFgColor: Colors.white,
+            unSelectedBgColor: ColorsManager.white,
+            unSelectedFgColor: ColorsManager.black,
+            isSelected:
+            widget.categories.indexOf(category) ==
+                selectedIndex,
+          ),
+        )
+            .toList(),
+      ),
+    );
+  }
+}
