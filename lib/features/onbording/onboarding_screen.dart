@@ -329,7 +329,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         : "Next",
                 onClick: () async {
                   if (isLast) {
-                       await PrefsManager.setSeenOnboarding();
+                       PrefsManager.setSeenOnboarding();
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
