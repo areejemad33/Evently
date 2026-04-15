@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class CreateEvent extends StatefulWidget {
-   CreateEvent({super.key});
+   const CreateEvent({super.key});
 
   @override
   State<CreateEvent> createState() => _CreateEventState();
@@ -39,7 +39,7 @@ class _CreateEventState extends State<CreateEvent> {
                 child: Image.asset(ImageAssets.meeting)),
             SizedBox(height: 16.h,),
 
-            CustomTabBar(categories: CategoryModel.categories,),
+            CustomTabBar(categories: CategoryModel.getCategories(context),),
             SizedBox(height: 16.h,),
             Text("Title", style: Theme.of(context).textTheme.displayLarge,),
             SizedBox(height: 8.h,),

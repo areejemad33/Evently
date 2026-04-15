@@ -12,43 +12,46 @@ class EventItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       width: double.infinity,
+    
+decoration: BoxDecoration(
+  borderRadius: BorderRadius.circular(16.r),
+  image: DecorationImage(
+    image: 
+  AssetImage(ImageAssets.meeting), fit: BoxFit.fill
+  ),
+  
+),
+child: Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Card(
+      margin: REdgeInsets.all(8),
+      color: ColorsManager.whiteF4,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.r)
+    ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("21 Jan", style: Theme.of(context).textTheme.titleSmall,),
+      )),
+              SizedBox(height: 97.h),
 
-      decoration: BoxDecoration(
-borderRadius: BorderRadius.circular(16.r),
-        image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage(ImageAssets.meeting)),
-      ),
-      child:Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            margin: REdgeInsets.all(8),
+    Card(
+        margin: REdgeInsets.all(8),
+      child: Row(
+      children: [
+        Expanded(child: Padding(
+          padding:  REdgeInsets.all(8.0),
+          child: Text(event.title, style: Theme.of(context).textTheme.titleMedium,),
+        )),
+        Icon(Icons.favorite_border, color: ColorsManager.blue,)
+      ],
+    ),)
 
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r)
-            ),
-            color: ColorsManager.whiteF4,
-            child: Padding(
-              padding:  REdgeInsets.all(8.0),
-              child: Text("21 Jan", style: Theme.of(context).textTheme.titleSmall,),
-            ),
-          ),
-          SizedBox(height: 97.h,),
-          Card(
-            margin: REdgeInsets.all(8),
-            child: Padding(
-              padding:  REdgeInsets.all(8.0),
-              child: Row(children: [
-                Expanded(child: Text(event.title, style: Theme.of(context).textTheme.titleMedium,)),
-                Icon(Icons.favorite_border, color: ColorsManager.blue,)
-              ],),
-            ),
-          )
-        ],
-      ),
+  ],
+),
+      
     );
   }
 }

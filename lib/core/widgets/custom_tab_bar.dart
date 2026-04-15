@@ -31,7 +31,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             .map(
               (category) => TabItem(
             category: category,
-            selectedBgColor: ColorsManager.blue,
+            selectedBgColor: ColorsManager.darkBlue,
             selectedFgColor: Colors.white,
             unSelectedBgColor: ColorsManager.white,
             unSelectedFgColor: ColorsManager.black,

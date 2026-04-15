@@ -2,10 +2,22 @@
 import 'package:evently_app/config/theme/theme_manager.dart';
 import 'package:evently_app/core/prefs_manager/prefs_manager.dart';
 import 'package:evently_app/core/routes_manager/routes_manager.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/providers/lang_provider.dart';
+import 'package:evently_app/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-void main() async{ WidgetsFlutterBinding.ensureInitialized(); bool seen = await PrefsManager.checkFirstTime(); runApp( Evenlty(seen)); }
+
+void main() async{ WidgetsFlutterBinding.ensureInitialized(); bool seen = await PrefsManager.checkFirstTime(); 
+
+runApp( MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_)=> ThemeProvider()),
+    ChangeNotifierProvider(create: (_)=> LangProvider()),
+  ],
+  child: Evenlty(seen))); }
 
 class Evenlty extends StatelessWidget {
   final bool seen;
@@ -14,6 +26,8 @@ class Evenlty extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
+    var langProvider = Provider.of<LangProvider>(context);
     return ScreenUtilInit(
       designSize: Size(375, 812),
       splitScreenMode: true,
@@ -24,13 +38,14 @@ class Evenlty extends StatelessWidget {
         onGenerateRoute: RoutesManager.router,
         theme:ThemeManager.light ,
         darkTheme: ThemeManager.dark,
-        themeMode: ThemeMode.light,
+        themeMode: themeProvider.currentTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: [
           Locale('en'),
           Locale('ar'),
-          Locale('es'),
+          Locale('fr'),
         ],
-        locale: Locale('en'),
+        locale: Locale(langProvider.currentLang),
 
       ),
 

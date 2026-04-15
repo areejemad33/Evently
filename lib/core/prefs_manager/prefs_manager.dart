@@ -11,4 +11,6 @@ class PrefsManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool("seenOnboarding", true);
   }
+
+  
 }

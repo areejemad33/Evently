@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: const Icon(
                     Icons.arrow_back_ios_new,
                     size: 20,
-                    color: ColorsManager.blue,
+                    color: ColorsManager.darkBlue,
                   ),
                 ),
               )
@@ -135,7 +135,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             controller: controller,
                             count: onboardingList.length,
                             effect: ExpandingDotsEffect(
-                              activeDotColor: ColorsManager.blue,
+                              activeDotColor: ColorsManager.darkBlue,
                               dotColor: ColorsManager.grey,
                               dotHeight: 10,
                               dotWidth: 8,
@@ -188,7 +188,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         color: isEnglish
-                                            ? ColorsManager.blue
+                                            ? ColorsManager.darkBlue
                                             : ColorsManager.white,
                                         borderRadius:
                                             BorderRadius.circular(16),
@@ -198,7 +198,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                         style: TextStyle(
                                           color: isEnglish
                                               ? ColorsManager.white
-                                              : ColorsManager.blue,
+                                              : ColorsManager.darkBlue,
                                         ),
                                       ),
                                     ),
@@ -217,7 +217,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         color: !isEnglish
-                                            ? ColorsManager.blue
+                                            ? ColorsManager.darkBlue
                                             : ColorsManager.white,
                                         borderRadius:
                                             BorderRadius.circular(16),
@@ -227,7 +227,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                         style: TextStyle(
                                           color: !isEnglish
                                               ? ColorsManager.white
-                                              : ColorsManager.blue,
+                                              : ColorsManager.darkBlue,
                                         ),
                                       ),
                                     ),
@@ -263,7 +263,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         color: isLight
-                                            ? ColorsManager.blue
+                                            ? ColorsManager.darkBlue
                                             : ColorsManager.white,
                                         borderRadius:
                                             BorderRadius.circular(16),
@@ -272,7 +272,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                         Icons.light_mode,
                                         color: isLight
                                             ? ColorsManager.white
-                                            : ColorsManager.blue,
+                                            : ColorsManager.darkBlue,
                                       ),
                                     ),
                                   ),
@@ -290,7 +290,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         color: !isLight
-                                            ? ColorsManager.blue
+                                            ? ColorsManager.darkBlue
                                             : ColorsManager.white,
                                         borderRadius:
                                             BorderRadius.circular(16),
@@ -299,7 +299,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                         Icons.dark_mode_outlined,
                                         color: !isLight
                                             ? ColorsManager.white
-                                            : ColorsManager.blue,
+                                            : ColorsManager.darkBlue,
                                       ),
                                     ),
                                   ),

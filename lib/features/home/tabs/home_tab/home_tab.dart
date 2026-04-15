@@ -1,6 +1,7 @@
-
 import 'package:evently_app/core/resources/colors_manager.dart';
 import 'package:evently_app/core/widgets/custom_tab_bar.dart';
+import 'package:evently_app/core/widgets/tab_item.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/category_model.dart';
 import 'package:evently_app/model/event_model.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,9 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+      final appLocalizations = AppLocalizations.of(context)!;
+        final categories = CategoryModel.getCategoriesWithAll(context);
+
     return SafeArea(
       child: Column(
         children: [
@@ -31,21 +35,24 @@ class _HomeTabState extends State<HomeTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Welcome Back ✨",
+                      appLocalizations.welcome_back,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      "Muhammed Saad",
+                      "Areej Emad",
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],
                 ),
                 Spacer(),
-                Icon(Icons.light_mode_outlined, color: ColorsManager.blue),
+                Icon(Icons.light_mode_outlined, color: ColorsManager.darkBlue),
                 Card(
-                  color: ColorsManager.blue,
+                  color: ColorsManager.darkBlue,
                   child: Padding(
-                    padding: REdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 5.0,
+                      horizontal: 8.0,
+                    ),
                     child: Text(
                       "EN",
                       style: Theme.of(context).textTheme.labelLarge,
@@ -56,22 +63,46 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           SizedBox(height: 24.h),
-          CustomTabBar(categories: CategoryModel.categoriesWithAll,),
+        
+        DefaultTabController(
+          length: categories.length,
+          child: TabBar(
+            onTap: (index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+            tabAlignment: TabAlignment.start,
+            isScrollable: true,
+            dividerColor: Colors.transparent, 
+            indicatorColor: Colors.transparent,
+            tabs: categories.map(
+              (category) => TabItem(
+                category: category,
+                selectedBgColor: ColorsManager.darkBlue,
+                selectedFgColor: ColorsManager.white,
+                unSelectedBgColor: ColorsManager.white,
+                unSelectedFgColor: ColorsManager.black,
+                isSelected:
+                    categories.indexOf(category) == selectedIndex,
+              ),
+            ).toList(),
+          ),
+        ),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               itemBuilder: (context, index) => EventItem(
                 event: EventModel(
                   id: "1",
-                  category: CategoryModel.categories[0],
-                  title: "Meeting for Updating The Development Method ",
-                  description: "Meeting for Updating The Development Method ",
+                  category: CategoryModel.getCategories(context)[1],
+                  title: "Meeting For Updating The Development Method",
+                  description: "",
                   date: DateTime.now(),
                   time: TimeOfDay.now(),
                 ),
               ),
-
-              separatorBuilder: (context, index)=>SizedBox(height: 16.h,),
+              separatorBuilder: (context, index) => SizedBox(height: 16.h),
               itemCount: 20,
             ),
           ),

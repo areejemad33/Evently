@@ -14,7 +14,7 @@ VoidCallback? onTap;
         onTap:onTap,
         child: Text(title,
 
-          textAlign: align,style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600,color:ColorsManager.blue,decoration: TextDecoration.underline, decorationColor: ColorsManager.blue)
+          textAlign: align,style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600,color:ColorsManager.darkBlue,decoration: TextDecoration.underline, decorationColor: ColorsManager.blue)
 
          ));
   }

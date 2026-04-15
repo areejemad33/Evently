@@ -4,29 +4,30 @@ import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegisterScreen extends StatefulWidget {
-   RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
- late  TextEditingController _nameController ;
+  late TextEditingController _nameController;
 
-  late TextEditingController _emailController ;
+  late TextEditingController _emailController;
 
- late  TextEditingController _passwordController ;
+  late TextEditingController _passwordController;
 
- late  TextEditingController _confirmPasswordController ;
- GlobalKey<FormState> _formKey = GlobalKey<FormState>();
- bool securePassword = true;
- bool secureConfirmPassword = true;
-@override
+  late TextEditingController _confirmPasswordController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool securePassword = true;
+  bool secureConfirmPassword = true;
+  @override
   void initState() {
     super.initState();
     _nameController = TextEditingController();
@@ -34,16 +35,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
   }
+
   @override
   void dispose() {
-   _nameController.dispose();
-   _emailController.dispose();
-   _passwordController.dispose();
-   _confirmPasswordController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
-
-
   }
+
+  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,74 +58,86 @@ class _RegisterScreenState extends State<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(ImageAssets.evenltyLogo),
-SizedBox(height: 16.h),
+                SizedBox(height: 16.h),
                 Text(
-                  "Create Your Account",
+                appLocalizations.create_your_account,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: 24.h),
 
                 CustomTextFormField(
-                  validator: Validator.validateName,
+  validator: (value) => Validator.validateName(value, appLocalizations),
                   controller: _nameController,
-                  hintText: "Enter your name",
+                  hintText: appLocalizations.enter_your_name,
                   prefixIcon: Icon(Icons.person_2_outlined),
                 ),
                 SizedBox(height: 16.h),
                 CustomTextFormField(
-                  validator: Validator.validateEmail,
+  validator: (value) => Validator.validateEmail(value, appLocalizations),
                   controller: _emailController,
-                  hintText: "Enter your email",
+                  hintText: appLocalizations.enter_your_email,
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
                 SizedBox(height: 16.h),
 
                 CustomTextFormField(
                   isSecure: securePassword,
-                  validator: Validator.validatePassword,
+  validator: (value) => Validator.validatePassword(value, appLocalizations),
                   controller: _passwordController,
-                  hintText: "Enter your password",
+                  hintText: appLocalizations.enter_your_password,
                   prefixIcon: Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(onPressed: (){
-                    setState(() {
-                      securePassword = !securePassword;
-                    });
-                  }, icon:Icon(securePassword ? Icons.visibility_off : Icons.visibility) ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        securePassword = !securePassword;
+                      });
+                    },
+                    icon: Icon(
+                      securePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 16.h),
 
                 CustomTextFormField(
                   isSecure: secureConfirmPassword,
-                  validator: (input){
-                    if(input == null || input.trim().isEmpty){
-                      return "Please, confirm password";
+                  validator: (input) {
+                    if (input == null || input.trim().isEmpty) {
+                      return appLocalizations.please_confirm_password;
                     }
-                    if(input != _passwordController.text){
-                      return "Password doesn't match";
+                    if (input != _passwordController.text) {
+                      return appLocalizations.password_doesnot_match;
                     }
                     return null;
                   },
                   controller: _confirmPasswordController,
-                  hintText: "Confirm your password",
+                  hintText: appLocalizations.confirm_your_password,
                   prefixIcon: Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(onPressed: (){
-                    setState(() {
-                      secureConfirmPassword = !secureConfirmPassword;
-                    });
-                  }, icon:Icon(secureConfirmPassword ? Icons.visibility_off : Icons.visibility) ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        secureConfirmPassword = !secureConfirmPassword;
+                      });
+                    },
+                    icon: Icon(
+                      secureConfirmPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 60.h),
-                CustomElevatedButton(title: "SignUp", onClick: _register,),
+                CustomElevatedButton(title: appLocalizations.signup, onClick: _register),
                 SizedBox(height: 24.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account? ",
+                      appLocalizations.already_have_an_account,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                     CustomTextButton(
-                      title: "SignIn",
+                      title: appLocalizations.login,
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,
@@ -141,8 +155,7 @@ SizedBox(height: 16.h),
     );
   }
 
-  void _register(){
-  if(_formKey.currentState?.validate() == false) return;
-
+  void _register() {
+    if (_formKey.currentState?.validate() == false) return;
   }
 }

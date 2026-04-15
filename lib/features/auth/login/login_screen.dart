@@ -4,6 +4,7 @@ import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,8 +19,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
-GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-bool securePassword = true;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool securePassword = true;
   @override
   void initState() {
     super.initState();
@@ -34,6 +35,7 @@ bool securePassword = true;
     super.dispose();
   }
 
+  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,53 +48,57 @@ bool securePassword = true;
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(ImageAssets.evenltyLogo),
-SizedBox(height: 16.h),
+                SizedBox(height: 16.h),
                 Text(
-                  "Login to your account",
+              appLocalizations.login_to_your_account,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: 24.h),
 
                 CustomTextFormField(
-                  validator: Validator.validateEmail,
+  validator: (value) => Validator.validateEmail(value, appLocalizations),
                   controller: _emailController,
-                  hintText: "Enter your email",
+                  hintText: appLocalizations.enter_your_email,
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
                 SizedBox(height: 16.h),
 
                 CustomTextFormField(
                   isSecure: securePassword,
-                  validator: Validator.validatePassword,
+  validator: (value) => Validator.validatePassword(value, appLocalizations),
                   controller: _passwordController,
-                  hintText: "Enter your password",
+                  hintText: appLocalizations.enter_your_password,
                   prefixIcon: Icon(Icons.lock_outline),
-                  suffixIcon:IconButton(onPressed: (){
-                    setState(() {
-                    securePassword = !securePassword; // f
-
-                    });
-                  }, icon: Icon(securePassword ? Icons.visibility_off : Icons.visibility)),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        securePassword = !securePassword; // f
+                      });
+                    },
+                    icon: Icon(
+                      securePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 8.h),
                 CustomTextButton(
-                  title: "Forget Password ?",
+                  title: appLocalizations.forget_password,
                   align: TextAlign.end,
                 ),
 
                 SizedBox(height: 32.h),
-                CustomElevatedButton(title: "Login", onClick: _login,),
+                CustomElevatedButton(title: appLocalizations.login, onClick: _login),
                 SizedBox(height: 32.h),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t have an account ? ",
+                      appLocalizations.dont_have_an_account,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                     CustomTextButton(
-                      title: "Sign up",
+                      title: appLocalizations.signup,
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,
@@ -110,8 +116,8 @@ SizedBox(height: 16.h),
     );
   }
 
-
-  void _login(){
-    if(_formKey.currentState?.validate() == false)return ;
+  void _login() {
+    if (_formKey.currentState?.validate() == false) return;
+    Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
   }
 }

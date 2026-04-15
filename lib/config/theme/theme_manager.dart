@@ -16,7 +16,7 @@ class ThemeManager{
     primaryColor: ColorsManager.white,
     scaffoldBackgroundColor: ColorsManager.whiteF4,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: ColorsManager.blue,
+      backgroundColor: ColorsManager.darkBlue,
       foregroundColor: ColorsManager.white,
 shape: CircleBorder()
     ),
@@ -24,7 +24,7 @@ shape: CircleBorder()
 
       backgroundColor: ColorsManager.white,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: ColorsManager.blue,
+      selectedItemColor: ColorsManager.darkBlue,
       unselectedItemColor: ColorsManager.darkGrey,
         showUnselectedLabels: true,
       showSelectedLabels: true
@@ -55,7 +55,7 @@ shape: CircleBorder()
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: REdgeInsets.symmetric(vertical: 9),
-        backgroundColor: ColorsManager.blue,
+        backgroundColor: ColorsManager.darkBlue,
         foregroundColor: ColorsManager.white,
         textStyle: GoogleFonts.poppins(fontSize: 20.sp, fontWeight: FontWeight.w500, color: Colors.white)
       ),
@@ -63,15 +63,15 @@ shape: CircleBorder()
 
     textTheme: TextTheme(
       bodyMedium:GoogleFonts.poppins(fontSize: 16.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey, ), 
-      labelSmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.blue, ),
+      labelSmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.darkBlue, ),
       labelMedium: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey),
       labelLarge: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.white),
-      headlineLarge: GoogleFonts.poppins(fontSize: 24.sp, fontWeight:FontWeight.w600,color: ColorsManager.blue ),
+      headlineLarge: GoogleFonts.poppins(fontSize: 24.sp, fontWeight:FontWeight.w600,color: ColorsManager.darkBlue ),
       headlineSmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight:FontWeight.w400,color: ColorsManager.darkGrey ),
       headlineMedium: GoogleFonts.poppins(fontSize: 20.sp, fontWeight:FontWeight.w500,color: ColorsManager.black ),
-      titleSmall: GoogleFonts.poppins(fontSize: 16.sp, fontWeight:FontWeight.w600,color: ColorsManager.blue )
-     , titleMedium: GoogleFonts.poppins(fontSize: 14.sp, fontWeight:FontWeight.w500,color: ColorsManager.blue ),
-     titleLarge: GoogleFonts.poppins(fontSize: 18.sp, fontWeight:FontWeight.w500,color: ColorsManager.blue ),
+      titleSmall: GoogleFonts.poppins(fontSize: 16.sp, fontWeight:FontWeight.w600,color: ColorsManager.darkBlue )
+     , titleMedium: GoogleFonts.poppins(fontSize: 14.sp, fontWeight:FontWeight.w500,color: ColorsManager.darkBlue ),
+     titleLarge: GoogleFonts.poppins(fontSize: 18.sp, fontWeight:FontWeight.w500,color: ColorsManager.darkBlue ),
 
         displayMedium: GoogleFonts.poppins(fontSize: 20.sp, fontWeight: FontWeight.w600, color: ColorsManager.black)
         ,displaySmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey)
@@ -79,5 +79,143 @@ shape: CircleBorder()
 
     )
   );
-  static ThemeData dark = ThemeData();
+   static ThemeData dark = ThemeData(
+    useMaterial3: true,
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorsManager.dark,
+      foregroundColor: ColorsManager.white,
+      centerTitle: true,
+      titleTextStyle: GoogleFonts.poppins(
+        color: ColorsManager.whiteF4,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    dividerColor: ColorsManager.blue,
+    primaryColor: ColorsManager.dark,
+    scaffoldBackgroundColor: ColorsManager.dark,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorsManager.blue,
+      foregroundColor: ColorsManager.white,
+      shape: CircleBorder(),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: ColorsManager.dark,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: ColorsManager.blue,
+      unselectedItemColor: ColorsManager.darkGrey,
+      showUnselectedLabels: true,
+      showSelectedLabels: true,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(color: ColorsManager.blue, width: 1.w),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(color: ColorsManager.blue, width: 1.w),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(color: Colors.red, width: 1.w),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(color: Colors.red, width: 1.w),
+      ),
+      fillColor: ColorsManager.dark,
+      hintStyle: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.normal,
+        color: ColorsManager.darkGrey,
+      ),
+      filled: true,
+      prefixIconColor: ColorsManager.grey,
+      suffixIconColor: ColorsManager.grey,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        padding: REdgeInsets.symmetric(vertical: 9),
+        backgroundColor: ColorsManager.blue,
+        foregroundColor: ColorsManager.white,
+        textStyle: GoogleFonts.poppins(
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+      ),
+    ),
+cardTheme:CardThemeData(
+
+  color: ColorsManager.dark,
+
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(8.r),
+    side: BorderSide(color: ColorsManager.blue, width: 1.w),
+  )
+),
+    iconTheme: IconThemeData(
+      color: ColorsManager.blue
+    ),
+    textTheme: TextTheme(
+      labelSmall: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+        color: ColorsManager.darkBlue,
+      ),
+      labelMedium: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: ColorsManager.white,
+      ),
+      labelLarge: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+        color: ColorsManager.white,
+      ),
+      headlineLarge: GoogleFonts.poppins(
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w600,
+        color: ColorsManager.white,
+      ),
+      headlineSmall: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: ColorsManager.whiteD6,
+      ),
+      headlineMedium: GoogleFonts.poppins(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.white,
+      ),
+      titleSmall: GoogleFonts.poppins(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        color: ColorsManager.blue,
+      ),
+      titleLarge: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400,color:ColorsManager.blue,decoration: TextDecoration.underline, decorationColor: Colors.blue),
+      titleMedium: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.blue,
+      ),
+      displayMedium: GoogleFonts.poppins(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w600,
+        color: ColorsManager.white,
+      ),
+      displaySmall: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: ColorsManager.whiteD6,
+      ),
+      displayLarge: GoogleFonts.poppins(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.white,
+      ),
+    ),
+  );
 }
