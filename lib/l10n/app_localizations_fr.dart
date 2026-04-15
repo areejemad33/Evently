@@ -162,4 +162,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get password_doesnot_match => 'Les mots de passe ne correspondent pas';
+
+  @override
+  String get weak_password => 'Le mot de passe fourni est trop faible.';
+
+  @override
+  String get email_already_in_use => 'Le compte existe déjà pour cet e-mail.';
+
+  @override
+  String get something_went_wrong => 'Quelque chose a mal tourné';
+
+  @override
+  String get account_created_successfully => 'Compte créé avec succès';
+
+  @override
+  String get logged_in_successfully => 'Connecté avec succès';
+
+  @override
+  String get wrong_email_or_password => 'E-mail ou mot de passe incorrect';
 }

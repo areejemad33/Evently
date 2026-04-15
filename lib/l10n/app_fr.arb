@@ -48,5 +48,11 @@
   "add_at_least_one_lowercase_letter": "Ajoutez au moins une lettre minuscule",
   "add_at_least_one_number": "Ajoutez au moins un chiffre",
   "add_at_least_one_special_character": "Ajoutez au moins un caractère spécial",
-  "password_doesnot_match": "Les mots de passe ne correspondent pas"
+  "password_doesnot_match": "Les mots de passe ne correspondent pas",
+  "weak_password": "Le mot de passe fourni est trop faible.",
+  "email_already_in_use": "Le compte existe déjà pour cet e-mail.",
+  "something_went_wrong" : "Quelque chose a mal tourné",
+"account_created_successfully" : "Compte créé avec succès",
+"logged_in_successfully" : "Connecté avec succès",
+"wrong_email_or_password" : "E-mail ou mot de passe incorrect"
 }

@@ -399,6 +399,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password doesn\'t match'**
   String get password_doesnot_match;
+
+  /// No description provided for @weak_password.
+  ///
+  /// In en, this message translates to:
+  /// **'The password provided is too weak. '**
+  String get weak_password;
+
+  /// No description provided for @email_already_in_use.
+  ///
+  /// In en, this message translates to:
+  /// **'The account already exists for that email.'**
+  String get email_already_in_use;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get something_went_wrong;
+
+  /// No description provided for @account_created_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully'**
+  String get account_created_successfully;
+
+  /// No description provided for @logged_in_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged in successfully'**
+  String get logged_in_successfully;
+
+  /// No description provided for @wrong_email_or_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong email or password'**
+  String get wrong_email_or_password;
 }
 
 class _AppLocalizationsDelegate

@@ -49,8 +49,12 @@
    "add_at_least_one_number": "Add at least one number",
    "add_at_least_one_special_character":"Add at least one special character",
    "password_doesnot_match":"Password doesn't match"
-
-
+, "weak_password":"The password provided is too weak. ",
+"email_already_in_use" : "The account already exists for that email.",
+"something_went_wrong" : "Something went wrong",
+"account_created_successfully" : "Account created successfully",
+"logged_in_successfully" : "Logged in successfully",
+"wrong_email_or_password" : "Wrong email or password"
    
 
 

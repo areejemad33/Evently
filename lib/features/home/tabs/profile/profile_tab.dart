@@ -2,6 +2,7 @@ import 'package:evently_app/core/resources/assets_manager.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/providers/lang_provider.dart';
 import 'package:evently_app/providers/theme_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class _ProfileTabState extends State<ProfileTab> {
     late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     var themeProvider = Provider.of<ThemeProvider>(context);
     var langProvider = Provider.of<LangProvider>(context);
+    final user = FirebaseAuth.instance.currentUser;
     return Padding(
       padding: REdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -27,14 +29,13 @@ class _ProfileTabState extends State<ProfileTab> {
         children: [
           Image.asset(ImageAssets.profileImage, height: 104.h),
           Text(
-          //  UserModel.currentUser!.name,
-          "Areej Emad",
+            user?.displayName ?? "No Name",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displayMedium,
           ),
           Text(
-          //  UserModel.currentUser!.email,
-          "areej.emad@example.com",
+           user?.email ?? "No Email",
+          // "areej.emad@example.com",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displaySmall,
           ),

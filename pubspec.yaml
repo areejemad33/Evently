@@ -44,6 +44,10 @@ dependencies:
   smooth_page_indicator: ^2.0.1
   shared_preferences: ^2.5.5
   provider: ^6.1.5+1
+  firebase_core: ^4.7.0
+  firebase_messaging: ^16.2.0
+  firebase_auth: ^6.4.0
+  fluttertoast: ^9.0.0
 
 dev_dependencies:
   flutter_test:

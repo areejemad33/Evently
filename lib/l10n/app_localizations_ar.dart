@@ -162,4 +162,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get password_doesnot_match => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get weak_password => 'كلمة المرور المقدمة ضعيفة جدًا.';
+
+  @override
+  String get email_already_in_use =>
+      'الحساب تم إنشاؤه بالفعل لهذا البريد الإلكتروني.';
+
+  @override
+  String get something_went_wrong => 'حدث خطأ ما';
+
+  @override
+  String get account_created_successfully => 'تم إنشاء الحساب بنجاح';
+
+  @override
+  String get logged_in_successfully => 'تم تسجيل الدخول بنجاح';
+
+  @override
+  String get wrong_email_or_password =>
+      'البريد الإلكتروني أو كلمة المرور غير صحيحة';
 }

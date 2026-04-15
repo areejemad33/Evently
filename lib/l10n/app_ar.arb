@@ -48,5 +48,11 @@
   "add_at_least_one_lowercase_letter": "يجب إضافة حرف صغير واحد على الأقل",
   "add_at_least_one_number": "يجب إضافة رقم واحد على الأقل",
   "add_at_least_one_special_character": "يجب إضافة رمز خاص واحد على الأقل",
-  "password_doesnot_match": "كلمتا المرور غير متطابقتين"
+  "password_doesnot_match": "كلمتا المرور غير متطابقتين",
+  "weak_password": "كلمة المرور المقدمة ضعيفة جدًا.",
+"email_already_in_use" : "الحساب تم إنشاؤه بالفعل لهذا البريد الإلكتروني.",
+"something_went_wrong" : "حدث خطأ ما",
+"account_created_successfully" : "تم إنشاء الحساب بنجاح",
+"logged_in_successfully" : "تم تسجيل الدخول بنجاح",
+"wrong_email_or_password" : "البريد الإلكتروني أو كلمة المرور غير صحيحة"
 }

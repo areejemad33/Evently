@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:evently_app/core/resources/assets_manager.dart';
 import 'package:evently_app/core/routes_manager/routes_manager.dart';
+import 'package:evently_app/core/ui_utils/dialog_utils.dart';
 import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,9 +50,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+  late AppLocalizations appLocalizations;
   @override
   Widget build(BuildContext context) {
+    appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -60,20 +66,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Image.asset(ImageAssets.evenltyLogo),
                 SizedBox(height: 16.h),
                 Text(
-                appLocalizations.create_your_account,
+                  appLocalizations.create_your_account,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: 24.h),
 
                 CustomTextFormField(
-  validator: (value) => Validator.validateName(value, appLocalizations),
+                  validator: (value) =>
+                      Validator.validateName(value, appLocalizations),
                   controller: _nameController,
                   hintText: appLocalizations.enter_your_name,
                   prefixIcon: Icon(Icons.person_2_outlined),
                 ),
                 SizedBox(height: 16.h),
                 CustomTextFormField(
-  validator: (value) => Validator.validateEmail(value, appLocalizations),
+                  validator: (value) =>
+                      Validator.validateEmail(value, appLocalizations),
                   controller: _emailController,
                   hintText: appLocalizations.enter_your_email,
                   prefixIcon: Icon(Icons.email_outlined),
@@ -82,7 +90,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 CustomTextFormField(
                   isSecure: securePassword,
-  validator: (value) => Validator.validatePassword(value, appLocalizations),
+                  validator: (value) =>
+                      Validator.validatePassword(value, appLocalizations),
                   controller: _passwordController,
                   hintText: appLocalizations.enter_your_password,
                   prefixIcon: Icon(Icons.lock_outline),
@@ -127,7 +136,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 SizedBox(height: 60.h),
-                CustomElevatedButton(title: appLocalizations.signup, onClick: _register),
+                CustomElevatedButton(
+                  title: appLocalizations.signup,
+                  onClick: _register,
+                ),
                 SizedBox(height: 24.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +167,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _register() {
+  void _register() async {
     if (_formKey.currentState?.validate() == false) return;
+    try {
+      DialogUtils.showLoading(context, dismissible: false);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+      DialogUtils.hideDialog(context);
+      DialogUtils.showToastMessage(
+        message: appLocalizations.account_created_successfully,
+        backgroundColor: Colors.green,
+      );
+      Navigator.pushReplacementNamed(context, RoutesManager.login);
+    } on FirebaseAuthException catch (exception) {
+      DialogUtils.hideDialog(context);
+      if (exception.code == 'weak-password') {
+        DialogUtils.showToastMessage(
+          message: appLocalizations.weak_password,
+          backgroundColor: Colors.red,
+        );
+      } else if (exception.code == 'email-already-in-use') {
+        DialogUtils.showToastMessage(
+          message: appLocalizations.email_already_in_use,
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      DialogUtils.hideDialog(context);
+      DialogUtils.showToastMessage(
+        message: appLocalizations.something_went_wrong,
+        backgroundColor: Colors.red,
+      );
+    }
   }
 }

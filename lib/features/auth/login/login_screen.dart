@@ -1,10 +1,12 @@
 import 'package:evently_app/core/resources/assets_manager.dart';
 import 'package:evently_app/core/routes_manager/routes_manager.dart';
+import 'package:evently_app/core/ui_utils/dialog_utils.dart';
 import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,13 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 Image.asset(ImageAssets.evenltyLogo),
                 SizedBox(height: 16.h),
                 Text(
-              appLocalizations.login_to_your_account,
+                  appLocalizations.login_to_your_account,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: 24.h),
 
                 CustomTextFormField(
-  validator: (value) => Validator.validateEmail(value, appLocalizations),
+                  validator: (value) =>
+                      Validator.validateEmail(value, appLocalizations),
                   controller: _emailController,
                   hintText: appLocalizations.enter_your_email,
                   prefixIcon: Icon(Icons.email_outlined),
@@ -65,14 +68,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 CustomTextFormField(
                   isSecure: securePassword,
-  validator: (value) => Validator.validatePassword(value, appLocalizations),
+                  // validator: (value) =>
+                  //     Validator.validatePassword(value, appLocalizations),
                   controller: _passwordController,
                   hintText: appLocalizations.enter_your_password,
                   prefixIcon: Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        securePassword = !securePassword; // f
+                        securePassword = !securePassword; 
                       });
                     },
                     icon: Icon(
@@ -87,7 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 SizedBox(height: 32.h),
-                CustomElevatedButton(title: appLocalizations.login, onClick: _login),
+                CustomElevatedButton(
+                  title: appLocalizations.login,
+                  onClick: _login,
+                ),
                 SizedBox(height: 32.h),
 
                 Row(
@@ -116,8 +123,56 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState?.validate() == false) return;
-    Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
+
+    try {
+      DialogUtils.showLoading(context, dismissible: false);
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      DialogUtils.hideDialog(context);
+
+      DialogUtils.showToastMessage(
+        message: appLocalizations.logged_in_successfully,
+        backgroundColor: Colors.green,
+      );
+
+      Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
+    } on FirebaseAuthException catch (exception) {
+      DialogUtils.hideDialog(context);
+
+    
+
+      if (exception.code == 'invalid-credential') {
+        DialogUtils.showToastMessage(
+          message: appLocalizations.wrong_email_or_password,
+          backgroundColor: Colors.red,
+        );
+      } else if (exception.code == 'user-not-found') {
+        DialogUtils.showToastMessage(
+          message: appLocalizations.wrong_email_or_password,
+          backgroundColor: Colors.red,
+        );
+      } else if (exception.code == 'wrong-password') {
+        DialogUtils.showToastMessage(
+          message: appLocalizations.wrong_email_or_password,
+          backgroundColor: Colors.red,
+        );
+      } 
+    } catch (e) {
+      DialogUtils.hideDialog(context);
+
+    
+
+      DialogUtils.showToastMessage(
+        message: appLocalizations.something_went_wrong,
+        backgroundColor: Colors.red,
+      );
+    }
   }
 }
+

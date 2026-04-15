@@ -160,4 +160,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get password_doesnot_match => 'Password doesn\'t match';
+
+  @override
+  String get weak_password => 'The password provided is too weak. ';
+
+  @override
+  String get email_already_in_use =>
+      'The account already exists for that email.';
+
+  @override
+  String get something_went_wrong => 'Something went wrong';
+
+  @override
+  String get account_created_successfully => 'Account created successfully';
+
+  @override
+  String get logged_in_successfully => 'Logged in successfully';
+
+  @override
+  String get wrong_email_or_password => 'Wrong email or password';
 }
