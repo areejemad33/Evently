@@ -15,9 +15,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [HomeTab(), FavouriteTab(), ProfileTab()];
   int currentIndex = 0;
-  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+  late AppLocalizations appLocalizations;
   @override
   Widget build(BuildContext context) {
+    appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: tabs[currentIndex],
       bottomNavigationBar: _buildBottomNavBar,
