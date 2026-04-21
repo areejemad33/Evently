@@ -1,9 +1,7 @@
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
-import 'package:evently_app/model/category_model.dart';
 import 'package:evently_app/model/event_model.dart';
-import 'package:evently_app/model/user_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

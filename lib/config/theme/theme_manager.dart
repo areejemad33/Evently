@@ -63,6 +63,8 @@ shape: CircleBorder()
 
     textTheme: TextTheme(
       bodyMedium:GoogleFonts.poppins(fontSize: 16.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey, ), 
+              bodySmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w400, color: ColorsManager.black),
+
       labelSmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.darkBlue, ),
       labelMedium: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey),
       labelLarge: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.white),

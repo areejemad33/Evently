@@ -47,7 +47,7 @@ class _CreateEventState extends State<CreateEvent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Event")),
+      appBar: AppBar(title: Text(appLocalization.add_event)),
       body: Padding(
         padding: REdgeInsets.symmetric(horizontal: 16),
         child: Column(
