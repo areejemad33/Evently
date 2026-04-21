@@ -7,7 +7,9 @@ import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -171,11 +173,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState?.validate() == false) return;
     try {
       DialogUtils.showLoading(context, dismissible: false);
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
+      UserCredential userCredential = await FirebaseService.register(
+        email: _emailController.text,
         password: _passwordController.text,
       );
+    
       DialogUtils.hideDialog(context);
+      UserModel user = UserModel(
+        id: userCredential.user!.uid,
+        name: _nameController.text,
+        email: _emailController.text, favouriteEventsIds: [],
+      );
+      await FirebaseService.addUserToFireStore(user);
       DialogUtils.showToastMessage(
         message: appLocalizations.account_created_successfully,
         backgroundColor: Colors.green,

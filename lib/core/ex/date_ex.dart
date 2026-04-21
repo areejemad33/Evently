@@ -6,4 +6,6 @@ extension DateTimeEx on DateTime{
   String get getFormattedTime{
    return DateFormat('hh:mm').format(this);
   }
+  String get getMonth =>  DateFormat('dd-MMM').format(this);
+
 }

@@ -180,4 +180,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wrong_email_or_password => 'E-mail ou mot de passe incorrect';
+
+  @override
+  String get event_created => 'Événement créé avec succès';
+
+  @override
+  String get no_events => 'Pas encore d\'événements';
 }

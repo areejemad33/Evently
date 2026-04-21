@@ -1,12 +1,14 @@
 import 'package:evently_app/core/resources/assets_manager.dart';
+import 'package:evently_app/core/routes_manager/routes_manager.dart';
+import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/model/user_model.dart';
 import 'package:evently_app/providers/lang_provider.dart';
 import 'package:evently_app/providers/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
 
@@ -29,13 +31,13 @@ class _ProfileTabState extends State<ProfileTab> {
         children: [
           Image.asset(ImageAssets.profileImage, height: 104.h),
           Text(
-            user?.displayName ?? "No Name",
+            UserModel.currentUser!.name,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displayMedium,
           ),
           Text(
-           user?.email ?? "No Email",
-          // "areej.emad@example.com",
+            UserModel.currentUser!.email,
+        
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displaySmall,
           ),
@@ -59,9 +61,8 @@ class _ProfileTabState extends State<ProfileTab> {
                 ),
                 Spacer(),
                 Switch(
-                  value:themeProvider.isDark,
+                  value: themeProvider.isDark,
                   onChanged: (isDarkEnabled) {
-
                     themeProvider.updateAppTheme(
                       isDarkEnabled ? ThemeMode.dark : ThemeMode.light,
                     );
@@ -85,8 +86,8 @@ class _ProfileTabState extends State<ProfileTab> {
             child: Row(
               children: [
                 Text(
-                langProvider.isEn ? "language" : "اللغه",
-              
+                  langProvider.isEn ? "language" : "اللغه",
+
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 Spacer(),
@@ -100,7 +101,9 @@ class _ProfileTabState extends State<ProfileTab> {
                       )
                       .toList(),
                   onChanged: (newLang) {
-langProvider.updateAppLang(newLang == "English" ? "en" : "ar");
+                    langProvider.updateAppLang(
+                      newLang == "English" ? "en" : "ar",
+                    );
                   },
                 ),
               ],
@@ -109,7 +112,7 @@ langProvider.updateAppLang(newLang == "English" ? "en" : "ar");
 
           SizedBox(height: 16.h),
           InkWell(
-            // onTap: _logout,
+            onTap: _logout,
             child: Container(
               padding: REdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
@@ -138,10 +141,9 @@ langProvider.updateAppLang(newLang == "English" ? "en" : "ar");
     );
   }
 
-  // void _logout()async{
+  void _logout() async {
+    await FirebaseService.logout();
 
-  //  await  FirebaseService.logout();
-
-  //  Navigator.pushReplacementNamed(context, RoutesManager.login);
-  // }
+    Navigator.pushReplacementNamed(context, RoutesManager.login);
+  }
 }

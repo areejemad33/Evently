@@ -29,8 +29,8 @@
   "add_event":"Add Event",
   "title":"Title",
   "description" :"Description",
-  "event_title" :"Event_Title",
-  "event_decription" :"Event_Description",
+  "event_title" :"Event Title",
+  "event_decription" :"Event Description",
   "event_date":"Event_Date",
   "event_time":"Event_Time",
   "choose_time":"Choose time",
@@ -54,7 +54,9 @@
 "something_went_wrong" : "Something went wrong",
 "account_created_successfully" : "Account created successfully",
 "logged_in_successfully" : "Logged in successfully",
-"wrong_email_or_password" : "Wrong email or password"
+"wrong_email_or_password" : "Wrong email or password",
+"event_created" : "Event created successfully",
+"no_events" : "No events yet"
    
 
 

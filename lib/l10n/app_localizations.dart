@@ -283,13 +283,13 @@ abstract class AppLocalizations {
   /// No description provided for @event_title.
   ///
   /// In en, this message translates to:
-  /// **'Event_Title'**
+  /// **'Event Title'**
   String get event_title;
 
   /// No description provided for @event_decription.
   ///
   /// In en, this message translates to:
-  /// **'Event_Description'**
+  /// **'Event Description'**
   String get event_decription;
 
   /// No description provided for @event_date.
@@ -435,6 +435,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wrong email or password'**
   String get wrong_email_or_password;
+
+  /// No description provided for @event_created.
+  ///
+  /// In en, this message translates to:
+  /// **'Event created successfully'**
+  String get event_created;
+
+  /// No description provided for @no_events.
+  ///
+  /// In en, this message translates to:
+  /// **'No events yet'**
+  String get no_events;
 }
 
 class _AppLocalizationsDelegate

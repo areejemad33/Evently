@@ -19,7 +19,7 @@ class CategoryModel {
       CategoryModel(
         id: "0",
         name: appLocalizations.aLL,
-        icon: Icons.all_inclusive, 
+        icon: Icons.all_inclusive,
         image: "",
       ),
       CategoryModel(
@@ -56,11 +56,9 @@ class CategoryModel {
     return categoriesWithAll;
   }
 
-
-    static List<CategoryModel> getCategories(BuildContext context) {
+  static List<CategoryModel> getCategories(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     List<CategoryModel> categories = [
-    
       CategoryModel(
         id: "1",
         name: appLocalizations.sport,

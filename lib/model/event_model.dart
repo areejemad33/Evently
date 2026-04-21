@@ -1,13 +1,44 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently_app/model/category_model.dart';
 import 'package:flutter/material.dart';
 
-class EventModel{
+class EventModel {
+  String ownerId;
   String id;
-  CategoryModel category;
   String title;
   String description;
-  DateTime date;
-  TimeOfDay time;
-  EventModel({required this.id, required this.category, required this.title, required this.description, required this.date, required this.time});
+  DateTime dateTime;
+  CategoryModel category;
+
+  EventModel({
+    required this.id,
+    required this.category,
+    required this.title,
+    required this.description,
+    required this.dateTime,
+    required this.ownerId,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'ownerId': ownerId,
+      'id': id,
+      'title': title,
+      'description': description,
+      'dateTime': dateTime,
+      'categoryId': category.id,
+    };
+  }
+
+  EventModel.fromJson(Map<String, dynamic> json, BuildContext context)
+    : this(
+      ownerId: json['ownerId'], 
+        id: json['id'],
+        title: json['title'],
+        description: json['description'],
+        dateTime: (json['dateTime'] as Timestamp).toDate(),
+        category: CategoryModel.getCategoriesWithAll(
+          context,
+        ).firstWhere((category) => category.id == json['categoryId']),
+      );
 }

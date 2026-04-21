@@ -5,7 +5,9 @@ import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -76,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        securePassword = !securePassword; 
+                        securePassword = !securePassword;
                       });
                     },
                     icon: Icon(
@@ -129,10 +131,14 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       DialogUtils.showLoading(context, dismissible: false);
 
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
+      UserCredential userCredential = await FirebaseService.login(
+        email: _emailController.text,
         password: _passwordController.text,
       );
+      UserModel.currentUser = await FirebaseService.getUserFromFireStore(
+        userCredential.user!.uid,
+      );
+    
 
       DialogUtils.hideDialog(context);
 
@@ -144,8 +150,6 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
     } on FirebaseAuthException catch (exception) {
       DialogUtils.hideDialog(context);
-
-    
 
       if (exception.code == 'invalid-credential') {
         DialogUtils.showToastMessage(
@@ -162,11 +166,9 @@ class _LoginScreenState extends State<LoginScreen> {
           message: appLocalizations.wrong_email_or_password,
           backgroundColor: Colors.red,
         );
-      } 
+      }
     } catch (e) {
       DialogUtils.hideDialog(context);
-
-    
 
       DialogUtils.showToastMessage(
         message: appLocalizations.something_went_wrong,
@@ -175,4 +177,3 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
-

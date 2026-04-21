@@ -54,5 +54,7 @@
   "something_went_wrong" : "Quelque chose a mal tourné",
 "account_created_successfully" : "Compte créé avec succès",
 "logged_in_successfully" : "Connecté avec succès",
-"wrong_email_or_password" : "E-mail ou mot de passe incorrect"
+"wrong_email_or_password" : "E-mail ou mot de passe incorrect",
+"event_created" : "Événement créé avec succès", 
+"no_events" : "Pas encore d'événements" 
 }

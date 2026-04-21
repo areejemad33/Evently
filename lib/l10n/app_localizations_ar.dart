@@ -182,4 +182,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get wrong_email_or_password =>
       'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+
+  @override
+  String get event_created => 'تم إنشاء الحدث بنجاح';
+
+  @override
+  String get no_events => 'لا توجد أحداث حتى الآن';
 }

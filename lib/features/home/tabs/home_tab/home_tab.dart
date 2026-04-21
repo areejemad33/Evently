@@ -1,13 +1,15 @@
 import 'package:evently_app/core/resources/colors_manager.dart';
 import 'package:evently_app/core/widgets/custom_tab_bar.dart';
 import 'package:evently_app/core/widgets/tab_item.dart';
+import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/category_model.dart';
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'event_item.dart';
+import '../../../../core/widgets/event_item.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -18,11 +20,14 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
+ late   CategoryModel selectedCategory = CategoryModel.getCategoriesWithAll(
+    context,
+  )[0];
+  List<EventModel> events = [];
 
   @override
   Widget build(BuildContext context) {
-      final appLocalizations = AppLocalizations.of(context)!;
-        final categories = CategoryModel.getCategoriesWithAll(context);
+    final appLocalizations = AppLocalizations.of(context)!;
 
     return SafeArea(
       child: Column(
@@ -39,7 +44,7 @@ class _HomeTabState extends State<HomeTab> {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      "Areej Emad",
+                      UserModel.currentUser!.name,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],
@@ -63,48 +68,45 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           SizedBox(height: 24.h),
-        
-        DefaultTabController(
-          length: categories.length,
-          child: TabBar(
-            onTap: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
+
+          CustomTabBar(
+            categories: CategoryModel.getCategoriesWithAll(context),
+            onCategoryItemClicked: (newCategory) {
+              selectedCategory = newCategory;
+              setState(() {});
             },
-            tabAlignment: TabAlignment.start,
-            isScrollable: true,
-            dividerColor: Colors.transparent, 
-            indicatorColor: Colors.transparent,
-            tabs: categories.map(
-              (category) => TabItem(
-                category: category,
-                selectedBgColor: ColorsManager.darkBlue,
-                selectedFgColor: ColorsManager.white,
-                unSelectedBgColor: ColorsManager.white,
-                unSelectedFgColor: ColorsManager.black,
-                isSelected:
-                    categories.indexOf(category) == selectedIndex,
-              ),
-            ).toList(),
           ),
-        ),
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              itemBuilder: (context, index) => EventItem(
-                event: EventModel(
-                  id: "1",
-                  category: CategoryModel.getCategories(context)[1],
-                  title: "Meeting For Updating The Development Method",
-                  description: "",
-                  date: DateTime.now(),
-                  time: TimeOfDay.now(),
-                ),
-              ),
-              separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              itemCount: 20,
-            ),
+
+          StreamBuilder(
+            stream: FirebaseService.getEventsFromFireStoreRealTime(context, selectedCategory),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) { 
+                return Center(
+                  child: Text(appLocalizations.something_went_wrong),
+                );
+              }
+              List<EventModel> events = snapshot.data!;
+              return Expanded(
+                child: events.isEmpty
+                    ? Center(child: Text(appLocalizations.no_events))
+                    : ListView.separated(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 24,
+                        ),
+                        itemBuilder: (context, index) =>
+                            EventItem(event: events[index],                      
+                                   markedAsFavourite: UserModel.currentUser!.favouriteEventsIds.contains(events[index].id),
+),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 16.h),
+                        itemCount: events.length,
+                      ),
+              );
+            },
           ),
         ],
       ),

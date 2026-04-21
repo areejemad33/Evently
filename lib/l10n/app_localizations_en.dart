@@ -99,10 +99,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get description => 'Description';
 
   @override
-  String get event_title => 'Event_Title';
+  String get event_title => 'Event Title';
 
   @override
-  String get event_decription => 'Event_Description';
+  String get event_decription => 'Event Description';
 
   @override
   String get event_date => 'Event_Date';
@@ -179,4 +179,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wrong_email_or_password => 'Wrong email or password';
+
+  @override
+  String get event_created => 'Event created successfully';
+
+  @override
+  String get no_events => 'No events yet';
 }
