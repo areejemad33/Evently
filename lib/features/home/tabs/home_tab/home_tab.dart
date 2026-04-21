@@ -44,7 +44,7 @@ class _HomeTabState extends State<HomeTab> {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      UserModel.currentUser!.name,
+                      UserModel.currentUser?.name ?? '',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],
@@ -99,7 +99,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                         itemBuilder: (context, index) =>
                             EventItem(event: events[index],                      
-                                   markedAsFavourite: UserModel.currentUser!.favouriteEventsIds.contains(events[index].id),
+                                   markedAsFavourite: UserModel.currentUser?.favouriteEventsIds.contains(events[index].id) ?? false,
 ),
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 16.h),

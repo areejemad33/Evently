@@ -63,6 +63,7 @@
 "cancel" : "Annuler",
 "edit_event" : "Modifier l'événement",
 "please_fill_all_fields" : "Veuillez remplir tous les champs",
-"event_updated_successfully" : "Événement mis à jour avec succès"
+"event_updated_successfully" : "Événement mis à jour avec succès",
+"signup_with_google" : "S'inscrire avec Google"
 
 }

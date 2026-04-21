@@ -489,6 +489,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event updated successfully'**
   String get event_updated_successfully;
+
+  /// No description provided for @signup_with_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up with Google'**
+  String get signup_with_google;
 }
 
 class _AppLocalizationsDelegate

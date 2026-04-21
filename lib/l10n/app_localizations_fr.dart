@@ -208,4 +208,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get event_updated_successfully => 'Événement mis à jour avec succès';
+
+  @override
+  String get signup_with_google => 'S\'inscrire avec Google';
 }

@@ -5,6 +5,7 @@ import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService {
   static Future<UserCredential> register({
@@ -207,6 +208,36 @@ Stream<EventModel> getEventById(String id, BuildContext context) {
       .doc(id)
       .snapshots()
       .map((doc) => EventModel.fromJson(doc.data()!, context));
+}
+static Future<UserModel?> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser =
+      await GoogleSignIn().signIn();
+
+  if (googleUser == null) return null;
+
+  final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
+
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+  final user = userCredential.user;
+
+  if (user == null) return null;
+
+  final appUser = UserModel(
+    id: user.uid,
+    email: user.email ?? googleUser.email,
+    name: user.displayName ?? googleUser.displayName ?? "User",
+    favouriteEventsIds: [],
+  );
+
+  return appUser;
 }
 
 }

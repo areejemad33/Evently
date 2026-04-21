@@ -63,6 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '31632121234',
     projectId: 'evently-app-61105',
     storageBucket: 'evently-app-61105.firebasestorage.app',
+    androidClientId: '31632121234-fle31e7f5vd2s48t9h7cvmtjasf0t6n1.apps.googleusercontent.com',
+    iosClientId: '31632121234-1i1p4eduismmq4q0hpsjj4omo9jq52ug.apps.googleusercontent.com',
     iosBundleId: 'com.example.eventlyApp',
   );
+
 }

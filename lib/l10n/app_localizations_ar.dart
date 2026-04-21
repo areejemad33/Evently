@@ -209,4 +209,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get event_updated_successfully => 'تم تحديث الحدث بنجاح';
+
+  @override
+  String get signup_with_google => 'التسجيل باستخدام جوجل';
 }

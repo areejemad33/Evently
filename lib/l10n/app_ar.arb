@@ -63,6 +63,7 @@
 "cancel" : "إلغاء",
 "edit_event" : "تعديل الحدث",
 "please_fill_all_fields" : "يرجى ملء جميع الحقول",
-"event_updated_successfully" : "تم تحديث الحدث بنجاح"
+"event_updated_successfully" : "تم تحديث الحدث بنجاح",
+"signup_with_google" : "التسجيل باستخدام جوجل"
 
 }

@@ -63,7 +63,8 @@
 "cancel" : "Cancel",
 "edit_event" : "Edit Event",
 "please_fill_all_fields" : "Please fill all fields",
-"event_updated_successfully" : "Event updated successfully"
+"event_updated_successfully" : "Event updated successfully",
+"signup_with_google" : "Sign up with Google"
 
 
 

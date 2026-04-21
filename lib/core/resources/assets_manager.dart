@@ -10,6 +10,8 @@ abstract class ImageAssets{
   static const String onboarding3 = '${base}onboarding3.png';
 
   static const String onboarding4 = '${base}onboarding4.png';
+  static const String googleLogo = '${base}google_logo.png';
+  
 
 
 }

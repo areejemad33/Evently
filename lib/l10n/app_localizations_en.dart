@@ -207,4 +207,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event_updated_successfully => 'Event updated successfully';
+
+  @override
+  String get signup_with_google => 'Sign up with Google';
 }

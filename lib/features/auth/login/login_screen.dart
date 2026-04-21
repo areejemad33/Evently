@@ -1,4 +1,5 @@
 import 'package:evently_app/core/resources/assets_manager.dart';
+import 'package:evently_app/core/resources/colors_manager.dart';
 import 'package:evently_app/core/routes_manager/routes_manager.dart';
 import 'package:evently_app/core/ui_utils/dialog_utils.dart';
 import 'package:evently_app/core/utils/validator.dart';
@@ -12,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -25,6 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _passwordController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool securePassword = true;
+  
+
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,6 +122,56 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 32.h),
+                  Row(
+  children: [
+    Expanded(
+      child: Divider(
+      
+        color: ColorsManager.grey,
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Text(appLocalizations.or, style: Theme.of(context).textTheme.titleLarge,),
+    ),
+    Expanded(
+      child: Divider(
+    
+        color: Colors.grey,
+      ),
+    ),
+  ],
+),
+                SizedBox(height: 24.h),
+
+              ElevatedButton(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.white,
+    foregroundColor: ColorsManager.darkBlue,
+    elevation: 0,
+    side: BorderSide(color: Colors.grey.shade300),
+    padding: EdgeInsets.symmetric(vertical: 12),
+  ),
+  onPressed: signInWithGoogle,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Image.asset(
+  ImageAssets.googleLogo,
+  width: 40,
+  height: 40,
+),
+      SizedBox(width: 10),
+      Text(
+        appLocalizations.login_with_google,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ],
+  ),
+)
               ],
             ),
           ),
@@ -124,7 +179,42 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+Future<void> signInWithGoogle() async {
+  try {
+    DialogUtils.showLoading(context, dismissible: false);
 
+    UserModel? user =
+        await FirebaseService.signInWithGoogle();
+
+    if (user == null) {
+      DialogUtils.hideDialog(context);
+      return;
+    }
+
+    UserModel.currentUser = user;
+
+    await FirebaseService.addUserToFireStore(user);
+
+    DialogUtils.hideDialog(context);
+
+    DialogUtils.showToastMessage(
+      message: appLocalizations.logged_in_successfully,
+      backgroundColor: Colors.green,
+    );
+
+    Navigator.pushReplacementNamed(
+      context,
+      RoutesManager.homeScreen,
+    );
+  } catch (e) {
+    DialogUtils.hideDialog(context);
+
+    DialogUtils.showToastMessage(
+      message: appLocalizations.something_went_wrong,
+      backgroundColor: Colors.red,
+    );
+  }
+}
   void _login() async {
     if (_formKey.currentState?.validate() == false) return;
 
@@ -138,7 +228,6 @@ class _LoginScreenState extends State<LoginScreen> {
       UserModel.currentUser = await FirebaseService.getUserFromFireStore(
         userCredential.user!.uid,
       );
-    
 
       DialogUtils.hideDialog(context);
 
@@ -176,4 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
+
+
+
 }
