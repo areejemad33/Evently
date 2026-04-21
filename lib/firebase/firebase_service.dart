@@ -191,5 +191,22 @@ class FirebaseService {
   await eventsCollection.doc(event.id).delete();
 }
 
+static Future<void> updateEvent(
+  BuildContext context,
+  EventModel event,
+) async {
+  CollectionReference<EventModel> eventsCollection =
+      getEventsCollection(context);
+
+  await eventsCollection.doc(event.id).update(event.toJson());
+}
+
+Stream<EventModel> getEventById(String id, BuildContext context) {
+  return FirebaseFirestore.instance
+      .collection('Events')
+      .doc(id)
+      .snapshots()
+      .map((doc) => EventModel.fromJson(doc.data()!, context));
+}
 
 }

@@ -200,4 +200,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancel => 'إلغاء';
+
+  @override
+  String get edit_event => 'تعديل الحدث';
+
+  @override
+  String get please_fill_all_fields => 'يرجى ملء جميع الحقول';
+
+  @override
+  String get event_updated_successfully => 'تم تحديث الحدث بنجاح';
 }

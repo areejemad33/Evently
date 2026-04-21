@@ -199,4 +199,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cancel => 'Annuler';
+
+  @override
+  String get edit_event => 'Modifier l\'événement';
+
+  @override
+  String get please_fill_all_fields => 'Veuillez remplir tous les champs';
+
+  @override
+  String get event_updated_successfully => 'Événement mis à jour avec succès';
 }

@@ -18,6 +18,24 @@ class EventModel {
     required this.dateTime,
     required this.ownerId,
   });
+  
+   EventModel copyWith({
+    String? ownerId,
+    String? id,
+    String? title,
+    String? description,
+    DateTime? dateTime,
+    CategoryModel? category,
+  }) {
+    return EventModel(
+      ownerId: ownerId ?? this.ownerId,
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      dateTime: dateTime ?? this.dateTime,
+      category: category ?? this.category,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

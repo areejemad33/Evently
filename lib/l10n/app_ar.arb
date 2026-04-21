@@ -60,6 +60,9 @@
 "delete_event" : "حذف الحدث",
 "delete_event_message" : "هل أنت متأكد أنك تريد حذف هذا الحدث؟",
 "delete" : "حذف",
-"cancel" : "إلغاء"
+"cancel" : "إلغاء",
+"edit_event" : "تعديل الحدث",
+"please_fill_all_fields" : "يرجى ملء جميع الحقول",
+"event_updated_successfully" : "تم تحديث الحدث بنجاح"
 
 }

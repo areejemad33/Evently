@@ -198,4 +198,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get edit_event => 'Edit Event';
+
+  @override
+  String get please_fill_all_fields => 'Please fill all fields';
+
+  @override
+  String get event_updated_successfully => 'Event updated successfully';
 }

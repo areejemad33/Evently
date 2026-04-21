@@ -60,6 +60,9 @@
 "delete_event" : "Supprimer l'événement",
 "delete_event_message" : "Êtes-vous sûr de vouloir supprimer cet événement ?",
 "delete" : "Supprimer",
-"cancel" : "Annuler"
+"cancel" : "Annuler",
+"edit_event" : "Modifier l'événement",
+"please_fill_all_fields" : "Veuillez remplir tous les champs",
+"event_updated_successfully" : "Événement mis à jour avec succès"
 
 }

@@ -471,6 +471,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @edit_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Event'**
+  String get edit_event;
+
+  /// No description provided for @please_fill_all_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all fields'**
+  String get please_fill_all_fields;
+
+  /// No description provided for @event_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event updated successfully'**
+  String get event_updated_successfully;
 }
 
 class _AppLocalizationsDelegate
