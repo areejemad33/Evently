@@ -96,6 +96,7 @@ class FirebaseService {
 
     DocumentReference<EventModel> eventDocument = eventsCollection.doc();
     event.id = eventDocument.id;
+
     return eventDocument.set(event);
   }
 
@@ -165,10 +166,15 @@ class FirebaseService {
   }
 
   static Future<List<EventModel>> getFavouriteEvents(
-    BuildContext context
-  
+    BuildContext context,
   ) async {
     List<EventModel> events = await getEventsFromFireStore(context);
-    return events.where((event) => UserModel.currentUser!.favouriteEventsIds.contains(event.id)).toList();
+    return events
+        .where(
+          (event) =>
+              UserModel.currentUser!.favouriteEventsIds.contains(event.id),
+        )
+        .toList();
   }
+  
 }
