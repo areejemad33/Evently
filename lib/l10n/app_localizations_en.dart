@@ -185,4 +185,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no_events => 'No events yet';
+
+  @override
+  String get delete_event => 'Delete Event';
+
+  @override
+  String get delete_event_message =>
+      'Are you sure you want to delete this event ?';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get cancel => 'Cancel';
 }

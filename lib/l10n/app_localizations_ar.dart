@@ -188,4 +188,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get no_events => 'لا توجد أحداث حتى الآن';
+
+  @override
+  String get delete_event => 'حذف الحدث';
+
+  @override
+  String get delete_event_message => 'هل أنت متأكد أنك تريد حذف هذا الحدث؟';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get cancel => 'إلغاء';
 }

@@ -1,3 +1,4 @@
+import 'package:evently_app/core/resources/colors_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,4 +34,40 @@ class DialogUtils {
       fontSize: 16.0,
     );
   }
+
+  static void showConfirmationDialog(
+  BuildContext context, {
+  required String message,
+  String? title,
+  String positiveButtonText = "Yes",
+  String negativeButtonText = "No",
+  VoidCallback? onPositivePressed,
+  VoidCallback? onNegativePressed,
+}) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: title != null ? Text(title) : null,
+      content: Text(message),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            if (onNegativePressed != null) onNegativePressed();
+          },
+          child: Text(negativeButtonText, style: TextStyle(color: ColorsManager.darkBlue),),
+        ),
+        TextButton(
+  
+          onPressed: () {
+            Navigator.pop(context);
+            if (onPositivePressed != null) onPositivePressed();
+          },
+          child: Text(positiveButtonText , 
+         style: TextStyle(color: ColorsManager.darkBlue),),
+        ),
+      ],
+    ),
+  );
+}
 }

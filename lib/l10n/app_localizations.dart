@@ -447,6 +447,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No events yet'**
   String get no_events;
+
+  /// No description provided for @delete_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Event'**
+  String get delete_event;
+
+  /// No description provided for @delete_event_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this event ?'**
+  String get delete_event_message;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

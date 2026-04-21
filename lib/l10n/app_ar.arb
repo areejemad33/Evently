@@ -56,5 +56,10 @@
 "logged_in_successfully" : "تم تسجيل الدخول بنجاح",
 "wrong_email_or_password" : "البريد الإلكتروني أو كلمة المرور غير صحيحة",
 "event_created" : "تم إنشاء الحدث بنجاح",
-"no_events" : "لا توجد أحداث حتى الآن"
+"no_events" : "لا توجد أحداث حتى الآن",
+"delete_event" : "حذف الحدث",
+"delete_event_message" : "هل أنت متأكد أنك تريد حذف هذا الحدث؟",
+"delete" : "حذف",
+"cancel" : "إلغاء"
+
 }

@@ -96,6 +96,7 @@ class FirebaseService {
 
     DocumentReference<EventModel> eventDocument = eventsCollection.doc();
     event.id = eventDocument.id;
+      event.ownerId = FirebaseAuth.instance.currentUser!.uid;
 
     return eventDocument.set(event);
   }
@@ -176,5 +177,19 @@ class FirebaseService {
         )
         .toList();
   }
-  
+  static Future<void> deleteEvent(
+  BuildContext context,
+  EventModel event,
+) async {
+  String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+
+
+  CollectionReference<EventModel> eventsCollection =
+      getEventsCollection(context);
+
+  await eventsCollection.doc(event.id).delete();
+}
+
+
 }

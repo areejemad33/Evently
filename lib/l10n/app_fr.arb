@@ -56,5 +56,10 @@
 "logged_in_successfully" : "Connecté avec succès",
 "wrong_email_or_password" : "E-mail ou mot de passe incorrect",
 "event_created" : "Événement créé avec succès", 
-"no_events" : "Pas encore d'événements" 
+"no_events" : "Pas encore d'événements" ,
+"delete_event" : "Supprimer l'événement",
+"delete_event_message" : "Êtes-vous sûr de vouloir supprimer cet événement ?",
+"delete" : "Supprimer",
+"cancel" : "Annuler"
+
 }
