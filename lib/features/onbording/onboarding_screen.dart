@@ -21,7 +21,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  PageController controller = PageController();
+  final PageController controller = PageController();
   int currentIndex = 0;
 
   @override
@@ -38,7 +38,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
     final cardColor = Theme.of(context).primaryColor;
-    final primaryText = Theme.of(context).textTheme.displayMedium;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -115,118 +114,143 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      /// IMAGE
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        width: double.infinity,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(item.image, fit: BoxFit.cover),
-                        ),
+                  child: SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height -
+                            kToolbarHeight -
+                            100,
                       ),
-
-                      const SizedBox(height: 20),
-
-                      /// DOTS
-                      Center(
-                        child: SmoothPageIndicator(
-                          controller: controller,
-                          count: onboardingList.length,
-                          effect: ExpandingDotsEffect(
-                            activeDotColor: ColorsManager.darkBlue,
-                            dotColor: ColorsManager.grey,
-                            dotHeight: 10,
-                            dotWidth: 8,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      /// TITLE
-                      Text(
-                        item.title,
-                        style: GoogleFonts.poppins(textStyle: primaryText),
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      /// DESCRIPTION
-                      Text(
-                        item.description,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      /// SETTINGS (FIRST PAGE ONLY)
-                      if (currentIndex == 0) ...[
-
-                        /// LANGUAGE
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(t.language,
-                                style: Theme.of(context).textTheme.titleLarge),
 
-                            Row(
-                              children: [
-
-                                _langButton(
-                                  title: "English",
-                                  active: langProvider.currentLang == "en",
-                                  onTap: () => langProvider.updateAppLang("en"),
+                            /// IMAGE
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              width: double.infinity,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.asset(
+                                  item.image,
+                                  fit: BoxFit.cover,
                                 ),
+                              ),
+                            ),
 
-                                const SizedBox(width: 10),
+                            const SizedBox(height: 20),
 
-                                _langButton(
-                                  title: "Arabic",
-                                  active: langProvider.currentLang == "ar",
-                                  onTap: () => langProvider.updateAppLang("ar"),
+                            /// DOTS
+                            Center(
+                              child: SmoothPageIndicator(
+                                controller: controller,
+                                count: onboardingList.length,
+                                effect: const ExpandingDotsEffect(
+                                  activeDotColor: ColorsManager.darkBlue,
+                                  dotColor: ColorsManager.grey,
+                                  dotHeight: 10,
+                                  dotWidth: 8,
                                 ),
-                              ],
-                            )
+                              ),
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            /// TITLE
+                            Text(
+                              item.title,
+                              style: GoogleFonts.poppins(
+                                textStyle:
+                                    Theme.of(context).textTheme.displayMedium,
+                              ),
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            /// DESCRIPTION
+                            Text(
+                              item.description,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            /// SETTINGS (FIRST PAGE ONLY)
+                            if (currentIndex == 0) ...[
+
+                              /// LANGUAGE
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    t.language,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge,
+                                  ),
+                                  Row(
+                                    children: [
+                                      _langButton(
+                                        title: "English",
+                                        active:
+                                            langProvider.currentLang == "en",
+                                        onTap: () =>
+                                            langProvider.updateAppLang("en"),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      _langButton(
+                                        title: "Arabic",
+                                        active:
+                                            langProvider.currentLang == "ar",
+                                        onTap: () =>
+                                            langProvider.updateAppLang("ar"),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              /// THEME
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    t.theme,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge,
+                                  ),
+                                  Row(
+                                    children: [
+                                      _iconButton(
+                                        icon: Icons.light_mode,
+                                        active: !isDark,
+                                        onTap: () => themeProvider
+                                            .updateAppTheme(
+                                                ThemeMode.light),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      _iconButton(
+                                        icon: Icons.dark_mode_outlined,
+                                        active: isDark,
+                                        onTap: () => themeProvider
+                                            .updateAppTheme(
+                                                ThemeMode.dark),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
                           ],
                         ),
-
-                        const SizedBox(height: 10),
-
-                        /// THEME
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(t.theme,
-                                style: Theme.of(context).textTheme.titleLarge),
-
-                            Row(
-                              children: [
-
-                                _iconButton(
-                                  icon: Icons.light_mode,
-                                  active: !isDark,
-                                  onTap: () =>
-                                      themeProvider.updateAppTheme(ThemeMode.light),
-                                ),
-
-                                const SizedBox(width: 10),
-
-                                _iconButton(
-                                  icon: Icons.dark_mode_outlined,
-                                  active: isDark,
-                                  onTap: () =>
-                                      themeProvider.updateAppTheme(ThemeMode.dark),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ],
+                      ),
+                    ),
                   ),
                 );
               },
@@ -271,7 +295,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  /// LANGUAGE BUTTON
   Widget _langButton({
     required String title,
     required bool active,
@@ -295,7 +318,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  /// ICON BUTTON
   Widget _iconButton({
     required IconData icon,
     required bool active,
