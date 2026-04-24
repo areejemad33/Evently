@@ -9,6 +9,8 @@ class EventModel {
   String description;
   DateTime dateTime;
   CategoryModel category;
+  
+  
 
   EventModel({
     required this.id,
@@ -17,6 +19,8 @@ class EventModel {
     required this.description,
     required this.dateTime,
     required this.ownerId,
+  
+    
   });
   
    EventModel copyWith({
@@ -26,6 +30,8 @@ class EventModel {
     String? description,
     DateTime? dateTime,
     CategoryModel? category,
+  
+    
   }) {
     return EventModel(
       ownerId: ownerId ?? this.ownerId,
@@ -34,6 +40,7 @@ class EventModel {
       description: description ?? this.description,
       dateTime: dateTime ?? this.dateTime,
       category: category ?? this.category,
+    
     );
   }
 
@@ -45,6 +52,7 @@ class EventModel {
       'description': description,
       'dateTime': dateTime,
       'categoryId': category.id,
+    
     };
   }
 
@@ -55,6 +63,7 @@ class EventModel {
         title: json['title'],
         description: json['description'],
         dateTime: (json['dateTime'] as Timestamp).toDate(),
+        
         category: CategoryModel.getCategoriesWithAll(
           context,
         ).firstWhere((category) => category.id == json['categoryId']),

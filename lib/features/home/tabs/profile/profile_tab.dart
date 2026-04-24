@@ -22,26 +22,27 @@ class _ProfileTabState extends State<ProfileTab> {
     late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     var themeProvider = Provider.of<ThemeProvider>(context);
     var langProvider = Provider.of<LangProvider>(context);
-    final user = FirebaseAuth.instance.currentUser;
     return Padding(
       padding: REdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: 50.h,),
           Image.asset(ImageAssets.profileImage, height: 104.h),
           Text(
             UserModel.currentUser!.name,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displayMedium,
           ),
+          SizedBox(height: 4.h,),
           Text(
             UserModel.currentUser!.email,
         
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displaySmall,
           ),
-          SizedBox(height: 32.h),
+          SizedBox(height: 30.h),
           Container(
             padding: REdgeInsets.symmetric(horizontal: 16, vertical: 4),
             decoration: BoxDecoration(
@@ -63,6 +64,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 Switch(
                   value: themeProvider.isDark,
                   onChanged: (isDarkEnabled) {
+                    print(Theme.of(context).brightness);
                     themeProvider.updateAppTheme(
                       isDarkEnabled ? ThemeMode.dark : ThemeMode.light,
                     );
@@ -86,26 +88,39 @@ class _ProfileTabState extends State<ProfileTab> {
             child: Row(
               children: [
                 Text(
-                  langProvider.isEn ? "language" : "اللغه",
+                appLocalizations.language,
 
                   style: Theme.of(context).textTheme.displayLarge,
-                ),
+                ), 
                 Spacer(),
                 DropdownButton(
-                  padding: EdgeInsets.zero,
-                  underline: Container(),
-                  items: ["English", "Arabic"]
-                      .map(
-                        (lang) =>
-                            DropdownMenuItem(value: lang, child: Text(lang)),
-                      )
-                      .toList(),
-                  onChanged: (newLang) {
-                    langProvider.updateAppLang(
-                      newLang == "English" ? "en" : "ar",
-                    );
-                  },
-                ),
+  padding: EdgeInsets.zero,
+  underline: Container(),
+  value: langProvider.currentLang == "en"
+      ? "English"
+      : langProvider.currentLang == "ar"
+          ? "العربيه"
+          : "French",
+
+  items: ["English", "العربيه", "French"]
+      .map(
+        (lang) => DropdownMenuItem(
+          value: lang,
+          child: Text(lang),
+        ),
+      )
+      .toList(),
+
+  onChanged: (newLang) {
+    if (newLang == "English") {
+      langProvider.updateAppLang("en");
+    } else if (newLang == "العربيه") {
+      langProvider.updateAppLang("ar");
+    } else if (newLang == "French") {
+      langProvider.updateAppLang("fr"); 
+    }
+  },
+)
               ],
             ),
           ),

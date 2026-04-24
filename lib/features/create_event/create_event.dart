@@ -44,8 +44,13 @@ class _CreateEventState extends State<CreateEvent> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+      final appLocalization = AppLocalizations.of(context)!;
+final isDark = Theme.of(context).brightness == Brightness.dark;
+final image = selectedCategory.getImage(isDark);
     return Scaffold(
       appBar: AppBar(title: Text(appLocalization.add_event)),
       body: Padding(
@@ -55,7 +60,10 @@ class _CreateEventState extends State<CreateEvent> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16.r),
-              child: Image.asset(ImageAssets.meeting),
+              child:  ClipRRect(
+  borderRadius: BorderRadius.circular(16.r),
+  child:Image.asset(image, fit: BoxFit.cover)
+)
             ),
             SizedBox(height: 16.h),
 
@@ -119,24 +127,37 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   void _addEvent() async {
-    EventModel event = EventModel(
-      ownerId: UserModel.currentUser!.id ,
-      id: "",
-      category: selectedCategory,
-      title: _titleController.text,
-      description: _descriptionController.text,
-      dateTime: selectedDateTime,
-    );
-    DialogUtils.showLoading(context);
-    await FirebaseService.addEventToFireStore(event, context);
-    DialogUtils.hideDialog(context);
+  if (_titleController.text.trim().isEmpty) {
     DialogUtils.showToastMessage(
-      message: appLocalization.event_created,
-      backgroundColor: Colors.green,
+      message: "Title cannot be empty",
+      backgroundColor: Colors.red,
     );
-    Navigator.pop(context);
+    return;
   }
 
+  EventModel event = EventModel(
+    ownerId: UserModel.currentUser!.id,
+    id: "",
+    category: selectedCategory,
+  
+    title: _titleController.text.trim(),
+    description: _descriptionController.text.trim(),
+    dateTime: selectedDateTime,
+  );
+
+  DialogUtils.showLoading(context);
+
+  await FirebaseService.addEventToFireStore(event, context);
+
+  DialogUtils.hideDialog(context);
+
+  DialogUtils.showToastMessage(
+    message: appLocalization.event_created,
+    backgroundColor: Colors.green,
+  );
+
+  Navigator.pop(context);
+}
   void _selectEventData() async {
     selectedDateTime =
         await showDatePicker(

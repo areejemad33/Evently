@@ -21,6 +21,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+    
       length: widget.categories.length,
       child: TabBar(
         onTap: (index) {

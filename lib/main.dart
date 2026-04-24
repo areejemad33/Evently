@@ -35,7 +35,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LangProvider()),
-      ],
+      ],  
       child: Evenlty(seen),
     ),
   );

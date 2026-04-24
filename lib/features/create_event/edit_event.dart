@@ -4,14 +4,15 @@ import 'package:evently_app/core/resources/colors_manager.dart';
 import 'package:evently_app/core/ui_utils/dialog_utils.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_tab_bar.dart';
-import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/category_model.dart';
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class EditEvent extends StatefulWidget {
   final EventModel event;
@@ -55,7 +56,7 @@ class _EditEventState extends State<EditEvent> {
   @override
   Widget build(BuildContext context) {
     appLocalization = AppLocalizations.of(context)!;
-
+final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(title: Text(appLocalization.edit_event)),
       body: Padding(
@@ -65,8 +66,12 @@ class _EditEventState extends State<EditEvent> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16.r),
-              child: Image.asset(ImageAssets.meeting),
-            ),
+              child: Image.asset(
+  themeProvider.isDark
+      ? selectedCategory.darkImage
+      : selectedCategory.image,
+)),
+            
 
             SizedBox(height: 16.h),
 

@@ -48,7 +48,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get already_have_an_account => ' هل لديك حساب بالفعل؟';
 
   @override
-  String get welcome_back => 'مرحبًا بعودتك';
+  String get welcome_back => 'مرحبًا بعودتك ✨';
 
   @override
   String get aLL => 'الكل';
@@ -212,4 +212,50 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get signup_with_google => 'التسجيل باستخدام جوجل';
+
+  @override
+  String get onboarding_title_1 => 'خصص تجربتك';
+
+  @override
+  String get onboarding_desc_1 =>
+      'اختر الثيم واللغة المفضلين لديك لبدء تجربة مريحة ومخصصة تناسب أسلوبك.';
+
+  @override
+  String get onboarding_title_2 => 'اكتشف فعاليات تلهمك';
+
+  @override
+  String get onboarding_desc_2 =>
+      'ادخل عالم من الفعاليات المصممة لتناسب اهتماماتك. سواء كنت تحب الموسيقى الحية، ورش العمل الفنية، أو بناء العلاقات المهنية، لدينا شيء يناسب الجميع. توصياتنا ستساعدك على الاستكشاف والتواصل والاستفادة من كل فرصة.';
+
+  @override
+  String get onboarding_title_3 => 'تخطيط فعاليات بسهولة';
+
+  @override
+  String get onboarding_desc_3 =>
+      'تخلص من متاعب تنظيم الفعاليات باستخدام أدوات التخطيط المتكاملة. من إنشاء الدعوات وإدارة الردود إلى التذكيرات وجدولة التفاصيل، نحن نوفر لك كل شيء لتخطط بسهولة وتركيز.';
+
+  @override
+  String get onboarding_title_4 => 'تواصل مع الأصدقاء وشارك اللحظات';
+
+  @override
+  String get onboarding_desc_4 =>
+      'اجعل كل فعالية ذكرى لا تُنسى بمشاركتها مع الآخرين. يمكنك دعوة أصدقائك، البقاء على تواصل، ومشاركة اللحظات المميزة بسهولة.';
+
+  @override
+  String get skip => 'تخطي';
+
+  @override
+  String get theme => 'المظهر';
+
+  @override
+  String get lets_start => 'ابدأ الآن';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String get get_started => 'ابدأ';
+
+  @override
+  String get event_deleted => 'تم مسح الحدث بنجاح ';
 }

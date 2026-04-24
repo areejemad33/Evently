@@ -7,9 +7,11 @@ import 'package:evently_app/features/create_event/edit_event.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/providers/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class EventDetails extends StatefulWidget {
   final EventModel event;
@@ -24,6 +26,8 @@ class _EventDetailsState extends State<EventDetails> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = AppLocalizations.of(context)!;
+final themeProvider = Provider.of<ThemeProvider>(context);
+
 
     bool isOwner =
         widget.event.ownerId == FirebaseAuth.instance.currentUser!.uid;
@@ -76,7 +80,7 @@ class _EventDetailsState extends State<EventDetails> {
                             Navigator.pop(context);
 
                             DialogUtils.showToastMessage(
-                              message: "Event deleted successfully",
+                              message: appLocalization.event_deleted,
                               backgroundColor: Colors.green,
                             );
                           },
@@ -94,7 +98,11 @@ class _EventDetailsState extends State<EventDetails> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.r),
-                  child: Image.asset(ImageAssets.meeting),
+                  child: Image.asset(
+  themeProvider.isDark
+      ? event.category.darkImage
+      : event.category.image,
+)
                 ),
 
                 SizedBox(height: 16.h),
@@ -111,7 +119,7 @@ class _EventDetailsState extends State<EventDetails> {
                 Container(
                   padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
-                    color: ColorsManager.white,
+                  color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Row(
@@ -119,12 +127,13 @@ class _EventDetailsState extends State<EventDetails> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                          color: ColorsManager.whiteF4,
+                        color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.date_range_outlined,
-                          color: ColorsManager.darkBlue,
+                          color: themeProvider.isDark
+      ? ColorsManager.blue : ColorsManager.darkBlue ,
                           size: 30,
                         ),
                       ),
@@ -164,7 +173,7 @@ class _EventDetailsState extends State<EventDetails> {
                   width: double.infinity,
                   padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
-                    color: ColorsManager.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Text(

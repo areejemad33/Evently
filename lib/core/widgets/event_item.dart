@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently_app/core/ex/date_ex.dart';
 import 'package:evently_app/core/resources/assets_manager.dart';
 import 'package:evently_app/core/resources/colors_manager.dart';
@@ -7,10 +6,16 @@ import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/model/event_model.dart';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EventItem extends StatefulWidget {
-  EventItem({super.key, required this.event , required this.markedAsFavourite});
+  EventItem({
+    super.key,
+    required this.event,
+    required this.markedAsFavourite,
+  });
+
   EventModel event;
   bool markedAsFavourite;
 
@@ -19,23 +24,39 @@ class EventItem extends StatefulWidget {
 }
 
 class _EventItemState extends State<EventItem> {
-late  bool favourite = widget.markedAsFavourite;
+  bool favourite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    favourite = widget.markedAsFavourite;
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EventDetails(event:  widget.event)),
+        MaterialPageRoute(
+          builder: (context) => EventDetails(event: widget.event),
+        ),
       ),
       child: Container(
         width: double.infinity,
-      
+        
+
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
+  
+          /// 🔥 dynamic image here
           image: DecorationImage(
-            image: AssetImage(ImageAssets.meeting),
-            fit: BoxFit.fill,
+      image: AssetImage(
+  widget.event.category.getImage(isDark),
+),     
           ),
         ),
         child: Column(
@@ -43,9 +64,10 @@ late  bool favourite = widget.markedAsFavourite;
           children: [
             Card(
               margin: REdgeInsets.all(8),
-              color: ColorsManager.whiteF4,
+              color: Theme.of(context).colorScheme.surface,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.r),
+                              
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -55,14 +77,18 @@ late  bool favourite = widget.markedAsFavourite;
                 ),
               ),
             ),
-            SizedBox(height: 97.h),
-      
+
+            SizedBox(height: 82.h),
+
             Card(
               margin: REdgeInsets.all(8),
-              color: ColorsManager.whiteF4,
-      
+            color: Theme.of(context).colorScheme.surface,
+          
+
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.r),
+                borderRadius: BorderRadius.circular(8.r),
+    
+                
               ),
               child: Row(
                 children: [
@@ -75,10 +101,11 @@ late  bool favourite = widget.markedAsFavourite;
                       ),
                     ),
                   ),
+
                   IconButton(
                     icon: favourite
-                        ? Icon(Icons.favorite)
-                        : Icon(Icons.favorite_border),
+                        ? const Icon(Icons.favorite)
+                        : const Icon(Icons.favorite_border),
                     color: ColorsManager.darkBlue,
                     onPressed: _markEventAsFavourite,
                   ),
@@ -92,12 +119,20 @@ late  bool favourite = widget.markedAsFavourite;
   }
 
   void _markEventAsFavourite() async {
-    if (favourite) {
-      await FirebaseService.removeEventFromFavourite(widget.event);
-    } else {
-      await FirebaseService.addEventToFavourite(widget.event);
+    setState(() {
+      favourite = !favourite;
+    });
+
+    try {
+      if (favourite) {
+        await FirebaseService.addEventToFavourite(widget.event);
+      } else {
+        await FirebaseService.removeEventFromFavourite(widget.event);
+      }
+    } catch (e) {
+      setState(() {
+        favourite = !favourite;
+      });
     }
-    favourite = !favourite;
-    setState(() {});
   }
 }

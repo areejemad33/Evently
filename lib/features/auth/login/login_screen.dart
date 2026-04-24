@@ -6,6 +6,7 @@ import 'package:evently_app/core/utils/validator.dart';
 import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app/features/auth/forget_password/forget_password.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/user_model.dart';
@@ -14,6 +15,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -26,8 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _passwordController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool securePassword = true;
-  
-
 
   @override
   void initState() {
@@ -95,6 +95,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomTextButton(
                   title: appLocalizations.forget_password,
                   align: TextAlign.end,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ForgetPasswordScreen(),
+                      ),
+                    );
+                  },
                 ),
 
                 SizedBox(height: 32.h),
@@ -123,55 +131,46 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 SizedBox(height: 32.h),
-                  Row(
-  children: [
-    Expanded(
-      child: Divider(
-      
-        color: ColorsManager.grey,
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Text(appLocalizations.or, style: Theme.of(context).textTheme.titleLarge,),
-    ),
-    Expanded(
-      child: Divider(
-    
-        color: Colors.grey,
-      ),
-    ),
-  ],
-),
+                Row(
+                  children: [
+                    Expanded(child: Divider(color: ColorsManager.grey)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        appLocalizations.or,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    Expanded(child: Divider(color: Colors.grey)),
+                  ],
+                ),
                 SizedBox(height: 24.h),
 
-              ElevatedButton(
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.white,
-    foregroundColor: ColorsManager.darkBlue,
-    elevation: 0,
-    side: BorderSide(color: Colors.grey.shade300),
-    padding: EdgeInsets.symmetric(vertical: 12),
-  ),
-  onPressed: signInWithGoogle,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-    Image.asset(
-  ImageAssets.googleLogo,
-  width: 40,
-  height: 40,
-),
-      SizedBox(width: 10),
-      Text(
-        appLocalizations.login_with_google,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    ],
-  ),
-)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: ColorsManager.darkBlue,
+                    elevation: 0,
+                    side: BorderSide(color: Colors.grey.shade300),
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  onPressed: signInWithGoogle,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        ImageAssets.googleLogo,
+                        width: 40,
+                        height: 40,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        appLocalizations.login_with_google,
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -179,42 +178,40 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-Future<void> signInWithGoogle() async {
-  try {
-    DialogUtils.showLoading(context, dismissible: false);
 
-    UserModel? user =
-        await FirebaseService.signInWithGoogle();
+  Future<void> signInWithGoogle() async {
+    try {
+      DialogUtils.showLoading(context, dismissible: false);
 
-    if (user == null) {
+      UserModel? user = await FirebaseService.signInWithGoogle();
+
+      if (user == null) {
+        DialogUtils.hideDialog(context);
+        return;
+      }
+
+      UserModel.currentUser = user;
+
+      await FirebaseService.addUserToFireStore(user);
+
       DialogUtils.hideDialog(context);
-      return;
+
+      DialogUtils.showToastMessage(
+        message: appLocalizations.logged_in_successfully,
+        backgroundColor: Colors.green,
+      );
+
+      Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
+    } catch (e) {
+      DialogUtils.hideDialog(context);
+
+      DialogUtils.showToastMessage(
+        message: appLocalizations.something_went_wrong,
+        backgroundColor: Colors.red,
+      );
     }
-
-    UserModel.currentUser = user;
-
-    await FirebaseService.addUserToFireStore(user);
-
-    DialogUtils.hideDialog(context);
-
-    DialogUtils.showToastMessage(
-      message: appLocalizations.logged_in_successfully,
-      backgroundColor: Colors.green,
-    );
-
-    Navigator.pushReplacementNamed(
-      context,
-      RoutesManager.homeScreen,
-    );
-  } catch (e) {
-    DialogUtils.hideDialog(context);
-
-    DialogUtils.showToastMessage(
-      message: appLocalizations.something_went_wrong,
-      backgroundColor: Colors.red,
-    );
   }
-}
+
   void _login() async {
     if (_formKey.currentState?.validate() == false) return;
 
@@ -265,7 +262,4 @@ Future<void> signInWithGoogle() async {
       );
     }
   }
-
-
-
 }

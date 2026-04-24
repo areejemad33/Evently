@@ -5,6 +5,19 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemeManager{
   static ThemeData light = ThemeData(
+    colorScheme: ColorScheme.light(
+  primary: ColorsManager.darkBlue,
+  secondary: ColorsManager.blue,
+  background: ColorsManager.whiteF4,
+   surface: ColorsManager.whiteF4,
+),
+cardTheme: CardThemeData(
+  color: ColorsManager.whiteF4, // 👈 لون الكونتينر الافتراضي
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(12.r),
+  ),
+),
+cardColor: ColorsManager.whiteF4,
     useMaterial3: true,
     appBarTheme: AppBarTheme(
       backgroundColor: ColorsManager.whiteF4,
@@ -81,36 +94,55 @@ shape: CircleBorder()
 
     )
   );
-   static ThemeData dark = ThemeData(
+     static ThemeData dark = ThemeData(
     useMaterial3: true,
+
+    colorScheme: ColorScheme.dark(
+      primary: ColorsManager.blue,
+      secondary: ColorsManager.darkBlue,
+      background: ColorsManager.dark,
+      surface: ColorsManager.dark,
+    ),
+    cardTheme: CardThemeData(
+  color: ColorsManager.dark, 
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(12.r),
+    side: BorderSide(color: ColorsManager.blue, width: 0.5),
+  ),
+),
+
     appBarTheme: AppBarTheme(
       backgroundColor: ColorsManager.dark,
       foregroundColor: ColorsManager.white,
       centerTitle: true,
       titleTextStyle: GoogleFonts.poppins(
-        color: ColorsManager.whiteF4,
+        color: ColorsManager.white,
         fontSize: 18.sp,
         fontWeight: FontWeight.w500,
       ),
     ),
-    dividerColor: ColorsManager.blue,
-    primaryColor: ColorsManager.dark,
+
     scaffoldBackgroundColor: ColorsManager.dark,
+    primaryColor: ColorsManager.dark,
+
+    dividerColor: ColorsManager.blue,
+
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: ColorsManager.blue,
       foregroundColor: ColorsManager.white,
-      shape: CircleBorder(),
+      shape: const CircleBorder(),
     ),
+
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: ColorsManager.dark,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: ColorsManager.blue,
-      unselectedItemColor: ColorsManager.darkGrey,
-      showUnselectedLabels: true,
+      unselectedItemColor: ColorsManager.white,
       showSelectedLabels: true,
+      showUnselectedLabels: true,
     ),
-    inputDecorationTheme: InputDecorationTheme(
 
+    inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(color: ColorsManager.blue, width: 1.w),
@@ -123,20 +155,14 @@ shape: CircleBorder()
         borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(color: Colors.red, width: 1.w),
       ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        borderSide: BorderSide(color: Colors.red, width: 1.w),
-      ),
+      filled: true,
       fillColor: ColorsManager.dark,
       hintStyle: GoogleFonts.poppins(
         fontSize: 14.sp,
-        fontWeight: FontWeight.normal,
-        color: ColorsManager.darkGrey,
+        color: ColorsManager.white,
       ),
-      filled: true,
-      prefixIconColor: ColorsManager.grey,
-      suffixIconColor: ColorsManager.grey,
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: REdgeInsets.symmetric(vertical: 9),
@@ -145,27 +171,26 @@ shape: CircleBorder()
         textStyle: GoogleFonts.poppins(
           fontSize: 20.sp,
           fontWeight: FontWeight.w500,
-          color: Colors.white,
         ),
       ),
     ),
-cardTheme:CardThemeData(
 
-  color: ColorsManager.dark,
-
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(8.r),
-    side: BorderSide(color: ColorsManager.blue, width: 1.w),
-  )
-),
-    iconTheme: IconThemeData(
-      color: ColorsManager.blue
-    ),
     textTheme: TextTheme(
+      bodyMedium: GoogleFonts.poppins(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w400,
+        color: ColorsManager.white,
+      ),
+      bodySmall: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: ColorsManager.white,
+      ),
+
       labelSmall: GoogleFonts.poppins(
         fontSize: 14.sp,
         fontWeight: FontWeight.w600,
-        color: ColorsManager.darkBlue,
+        color: ColorsManager.blue,
       ),
       labelMedium: GoogleFonts.poppins(
         fontSize: 14.sp,
@@ -177,31 +202,43 @@ cardTheme:CardThemeData(
         fontWeight: FontWeight.w600,
         color: ColorsManager.white,
       ),
+
       headlineLarge: GoogleFonts.poppins(
         fontSize: 24.sp,
         fontWeight: FontWeight.w600,
         color: ColorsManager.white,
       ),
-      headlineSmall: GoogleFonts.poppins(
-        fontSize: 14.sp,
-        fontWeight: FontWeight.w400,
-        color: ColorsManager.whiteD6,
-      ),
       headlineMedium: GoogleFonts.poppins(
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
+        color: ColorsManager.blue,
+      ),
+      headlineSmall: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
         color: ColorsManager.white,
+      ),
+
+      titleLarge: GoogleFonts.poppins(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.white,
+      ),
+      titleMedium: GoogleFonts.poppins(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.blue,
       ),
       titleSmall: GoogleFonts.poppins(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
         color: ColorsManager.blue,
       ),
-      titleLarge: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400,color:ColorsManager.blue,decoration: TextDecoration.underline, decorationColor: Colors.blue),
-      titleMedium: GoogleFonts.poppins(
-        fontSize: 14.sp,
+
+      displayLarge: GoogleFonts.poppins(
+        fontSize: 16.sp,
         fontWeight: FontWeight.w500,
-        color: ColorsManager.blue,
+        color: ColorsManager.white,
       ),
       displayMedium: GoogleFonts.poppins(
         fontSize: 20.sp,
@@ -211,13 +248,9 @@ cardTheme:CardThemeData(
       displaySmall: GoogleFonts.poppins(
         fontSize: 14.sp,
         fontWeight: FontWeight.w400,
-        color: ColorsManager.whiteD6,
-      ),
-      displayLarge: GoogleFonts.poppins(
-        fontSize: 16.sp,
-        fontWeight: FontWeight.w500,
         color: ColorsManager.white,
       ),
     ),
+    cardColor: ColorsManager.dark,
   );
 }

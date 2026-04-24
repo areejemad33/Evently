@@ -87,6 +87,15 @@ class FirebaseService {
     // return UserModel.fromJson(userJson);
   }
 
+  static Stream<UserModel> getUserStream() {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+
+  return getUsersCollection()
+      .doc(userId)
+      .snapshots()
+      .map((snapshot) => snapshot.data()!);
+}
+
   static Future<void> addEventToFireStore(
     EventModel event,
     BuildContext context,
@@ -147,26 +156,21 @@ class FirebaseService {
     yield* events;
   }
 
-  static Future<void> addEventToFavourite(EventModel event) {
-    UserModel currentUser = UserModel.currentUser!;
-    currentUser.favouriteEventsIds.add(event.id);
-    CollectionReference<UserModel> usersCollection = getUsersCollection();
-    DocumentReference<UserModel> userDocument = usersCollection.doc(
-      currentUser.id,
-    );
-    return userDocument.set(currentUser);
-  }
+  static Future<void> addEventToFavourite(EventModel event) async {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
 
-  static Future<void> removeEventFromFavourite(EventModel event) {
-    UserModel currentUser = UserModel.currentUser!;
-    currentUser.favouriteEventsIds.remove(event.id);
-    CollectionReference<UserModel> usersCollection = getUsersCollection();
-    DocumentReference<UserModel> userDocument = usersCollection.doc(
-      currentUser.id,
-    );
-    return userDocument.set(currentUser);
-  }
+  await getUsersCollection().doc(userId).update({
+    "favouriteEventsIds": FieldValue.arrayUnion([event.id]),
+  });
+}
 
+static Future<void> removeEventFromFavourite(EventModel event) async {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+
+  await getUsersCollection().doc(userId).update({
+    "favouriteEventsIds": FieldValue.arrayRemove([event.id]),
+  });
+}
   static Future<List<EventModel>> getFavouriteEvents(
     BuildContext context,
   ) async {
@@ -190,6 +194,31 @@ class FirebaseService {
       getEventsCollection(context);
 
   await eventsCollection.doc(event.id).delete();
+}
+
+static Stream<List<EventModel>> getFavouriteEventsRealTime(
+  BuildContext context,
+) {
+  final usersCollection = getUsersCollection();
+  final eventsCollection = getEventsCollection(context);
+
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+
+  return usersCollection.doc(userId).snapshots().asyncMap((userSnap) async {
+    final user = userSnap.data();
+
+    if (user == null || user.favouriteEventsIds.isEmpty) {
+      return [];
+    }
+
+    final snapshot = await eventsCollection.get();
+
+    final allEvents = snapshot.docs.map((e) => e.data()).toList();
+
+    return allEvents
+        .where((event) => user.favouriteEventsIds.contains(event.id))
+        .toList();
+  });
 }
 
 static Future<void> updateEvent(
@@ -239,5 +268,14 @@ static Future<UserModel?> signInWithGoogle() async {
 
   return appUser;
 }
+ static Future<void> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
+    }
+  }
 
 }

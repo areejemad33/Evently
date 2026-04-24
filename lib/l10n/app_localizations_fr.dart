@@ -48,7 +48,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get already_have_an_account => 'Vous avez déjà un compte ? ';
 
   @override
-  String get welcome_back => 'Bon retour';
+  String get welcome_back => 'Bon retour ✨';
 
   @override
   String get aLL => 'Tous';
@@ -211,4 +211,50 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get signup_with_google => 'S\'inscrire avec Google';
+
+  @override
+  String get onboarding_title_1 => 'Personnalisez votre expérience';
+
+  @override
+  String get onboarding_desc_1 =>
+      'Choisissez votre thème et votre langue préférés pour commencer une expérience confortable et adaptée à votre style.';
+
+  @override
+  String get onboarding_title_2 => 'Découvrez des événements inspirants';
+
+  @override
+  String get onboarding_desc_2 =>
+      'Plongez dans un monde d\'événements adaptés à vos intérêts. Que vous aimiez la musique live, les ateliers artistiques ou le networking professionnel, il y en a pour tous les goûts.';
+
+  @override
+  String get onboarding_title_3 => 'Planification d\'événements facile';
+
+  @override
+  String get onboarding_desc_3 =>
+      'Organisez vos événements sans effort grâce à nos outils complets. Invitations, rappels et gestion des détails, tout est simplifié pour vous.';
+
+  @override
+  String get onboarding_title_4 => 'Connectez-vous et partagez des moments';
+
+  @override
+  String get onboarding_desc_4 =>
+      'Rendez chaque événement mémorable en le partageant avec vos amis. Invitez-les, restez connectés et partagez les meilleurs moments.';
+
+  @override
+  String get skip => 'Passer';
+
+  @override
+  String get theme => 'Thème';
+
+  @override
+  String get lets_start => 'Commencer';
+
+  @override
+  String get next => 'Suivant';
+
+  @override
+  String get get_started => 'Commencer';
+
+  @override
+  String get event_deleted => 'Événement supprimé avec succès';
 }
