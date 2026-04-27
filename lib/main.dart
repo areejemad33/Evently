@@ -2,6 +2,7 @@ import 'package:evently_app/config/theme/theme_manager.dart';
 import 'package:evently_app/core/prefs_manager/prefs_manager.dart';
 import 'package:evently_app/core/routes_manager/routes_manager.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
+import 'package:evently_app/firebase/notifications_service.dart';
 import 'package:evently_app/firebase_options.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/user_model.dart';
@@ -9,17 +10,30 @@ import 'package:evently_app/providers/lang_provider.dart';
 import 'package:evently_app/providers/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 
 void main() async {
       WidgetsFlutterBinding.ensureInitialized();
+        FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
+  await requestNotificationPermission(); 
+    tz.initializeTimeZones();
+
+  tz.setLocalLocation(
+    tz.getLocation('Africa/Cairo'),
+  );
+  await NotificationService.init();
+
+
 
   await PrefsManager.init();
 
@@ -31,6 +45,7 @@ void main() async {
   }
 
   runApp(
+    
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
@@ -41,11 +56,24 @@ void main() async {
   );
 }
 
+Future<void> requestNotificationPermission() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  print('Permission: ${settings.authorizationStatus}');
+}
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling background message: ${message.messageId}");
+}
+
 class Evenlty extends StatelessWidget {
   final bool seen;
   const Evenlty(this.seen, {super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);

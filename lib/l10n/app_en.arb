@@ -83,7 +83,8 @@
   "lets_start": "Let's Start",
   "next": "Next",
   "get_started": "Get Started",
-  "event_deleted" : "Event deleted successfully"
+  "event_deleted" : "Event deleted successfully",
+  "reminder": "This Event will start in one hour."
 }
 
 

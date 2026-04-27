@@ -257,4 +257,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get event_deleted => 'Événement supprimé avec succès';
+
+  @override
+  String get reminder => 'Cet événement débutera dans une heure.';
 }

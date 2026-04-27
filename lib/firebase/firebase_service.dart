@@ -224,7 +224,10 @@ static Stream<List<EventModel>> getFavouriteEventsRealTime(
 static Future<void> updateEvent(
   BuildContext context,
   EventModel event,
-) async {
+
+) 
+async {
+  
   CollectionReference<EventModel> eventsCollection =
       getEventsCollection(context);
 

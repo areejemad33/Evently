@@ -6,6 +6,7 @@ import 'package:evently_app/core/widgets/custom_tab_bar.dart';
 import 'package:evently_app/core/widgets/custom_text_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
+import 'package:evently_app/firebase/notifications_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/category_model.dart';
 import 'package:evently_app/model/event_model.dart';
@@ -75,7 +76,7 @@ final image = selectedCategory.getImage(isDark);
               },
             ),
             SizedBox(height: 16.h),
-            Text("Title", style: Theme.of(context).textTheme.displayLarge),
+            Text(appLocalization.title, style: Theme.of(context).textTheme.displayLarge),
             SizedBox(height: 8.h),
             CustomTextFormField(
               controller: _titleController,
@@ -83,7 +84,7 @@ final image = selectedCategory.getImage(isDark);
             ),
             SizedBox(height: 16.h),
             Text(
-              "Description",
+              appLocalization.description,
               style: Theme.of(context).textTheme.displayLarge,
             ),
             SizedBox(height: 8.h),
@@ -102,7 +103,7 @@ final image = selectedCategory.getImage(isDark);
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 Spacer(),
-                CustomTextButton(title: "Choose Date", onTap: _selectEventData),
+                CustomTextButton(title: appLocalization.choose_date, onTap: _selectEventData),
               ],
             ),
             SizedBox(height: 20.h),
@@ -115,11 +116,11 @@ final image = selectedCategory.getImage(isDark);
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 Spacer(),
-                CustomTextButton(title: "Choose Time", onTap: _chooseEventTime),
+                CustomTextButton(title: appLocalization.choose_time, onTap: _chooseEventTime),
               ],
             ),
             SizedBox(height: 24.h),
-            CustomElevatedButton(title: "Add Event", onClick: _addEvent),
+            CustomElevatedButton(title: appLocalization.add_event, onClick: _addEvent),
           ],
         ),
       ),
@@ -149,6 +150,17 @@ final image = selectedCategory.getImage(isDark);
 
   await FirebaseService.addEventToFireStore(event, context);
 
+// ⏰ تحديد وقت التذكير (قبلها بساعة)
+DateTime reminderTime = selectedDateTime.subtract(Duration(hours: 1));
+
+// 🔔 إنشاء notification
+await NotificationService.scheduleNotification(
+  id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+  title: _titleController.text,
+  body: appLocalization.reminder,
+  scheduledTime: reminderTime,
+);
+
   DialogUtils.hideDialog(context);
 
   DialogUtils.showToastMessage(
@@ -158,6 +170,7 @@ final image = selectedCategory.getImage(isDark);
 
   Navigator.pop(context);
 }
+
   void _selectEventData() async {
     selectedDateTime =
         await showDatePicker(

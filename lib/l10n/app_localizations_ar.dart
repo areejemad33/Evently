@@ -258,4 +258,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get event_deleted => 'تم مسح الحدث بنجاح ';
+
+  @override
+  String get reminder => 'هذا الحدث سيبدأ خلال ساعه.';
 }

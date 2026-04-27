@@ -6,6 +6,7 @@ import 'package:evently_app/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app/core/widgets/custom_tab_bar.dart';
 import 'package:evently_app/core/widgets/custom_text_form_field.dart';
 import 'package:evently_app/firebase/firebase_service.dart';
+import 'package:evently_app/firebase/notifications_service.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/category_model.dart';
 import 'package:evently_app/model/event_model.dart';
@@ -56,7 +57,8 @@ class _EditEventState extends State<EditEvent> {
   @override
   Widget build(BuildContext context) {
     appLocalization = AppLocalizations.of(context)!;
-final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(title: Text(appLocalization.edit_event)),
       body: Padding(
@@ -67,11 +69,11 @@ final themeProvider = Provider.of<ThemeProvider>(context);
             ClipRRect(
               borderRadius: BorderRadius.circular(16.r),
               child: Image.asset(
-  themeProvider.isDark
-      ? selectedCategory.darkImage
-      : selectedCategory.image,
-)),
-            
+                themeProvider.isDark
+                    ? selectedCategory.darkImage
+                    : selectedCategory.image,
+              ),
+            ),
 
             SizedBox(height: 16.h),
 
@@ -110,68 +112,51 @@ final themeProvider = Provider.of<ThemeProvider>(context);
             SizedBox(height: 24.h),
 
             /// DATE
-    
+            Row(
+              children: [
+                Icon(Icons.date_range_outlined,
+                    color: ColorsManager.darkBlue),
+                SizedBox(width: 8.w),
+                Text(appLocalization.event_date,
+                    style: Theme.of(context).textTheme.displayLarge),
+                Spacer(),
+                GestureDetector(
+                  onTap: _selectEventData,
+                  child: Text(
+                    selectedDateTime.getFormattedDate,
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          color: ColorsManager.darkBlue,
+                          decoration: TextDecoration.underline,
+                          decorationColor: ColorsManager.darkBlue,
+                        ),
+                  ),
+                ),
+              ],
+            ),
 
-Row(
-  children: [
-      Icon(Icons.date_range_outlined,color: ColorsManager.darkBlue),
-        SizedBox(width: 8.w),
-            Text(appLocalization.event_date,
-    style: Theme.of(context).textTheme.displayLarge),
+            SizedBox(height: 24.h),
 
-  
-  
-    Spacer(),
-
-    Expanded(
-      child: GestureDetector(
-        onTap: _selectEventData,
-        child: Text(
-          selectedDateTime.getFormattedDate,
-          style: Theme.of(context)
-              .textTheme
-              .displayLarge!
-                .copyWith(
-            color: ColorsManager.darkBlue,
-            decoration: TextDecoration.underline,
-            decorationColor: ColorsManager.darkBlue,
-          ),
-        ),
-      ),
-    ),
-  ],
-),
-
-        SizedBox(height: 24.h),
-
-
-
-Row(
-  children: [
-    Icon(Icons.access_time, color: ColorsManager.darkBlue,),
-    SizedBox(width: 8.w),
-    Text(appLocalization.event_time,
-    style: Theme.of(context).textTheme.displayLarge),
-Spacer(),
-
-    Expanded(
-      child: GestureDetector(
-        onTap: _chooseEventTime,
-        child: Text(
-          selectedDateTime.getFormattedTime,
-          style: Theme.of(context)
-              .textTheme
-              .displayLarge!
-            .copyWith(
-            color: ColorsManager.darkBlue,
-            decoration: TextDecoration.underline,
-            decorationColor: ColorsManager.darkBlue,
-          ),
-        ),
-      ),
-    ),
-  ],
-),
+            /// TIME
+            Row(
+              children: [
+                Icon(Icons.access_time, color: ColorsManager.darkBlue),
+                SizedBox(width: 8.w),
+                Text(appLocalization.event_time,
+                    style: Theme.of(context).textTheme.displayLarge),
+                Spacer(),
+                GestureDetector(
+                  onTap: _chooseEventTime,
+                  child: Text(
+                    selectedDateTime.getFormattedTime,
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          color: ColorsManager.darkBlue,
+                          decoration: TextDecoration.underline,
+                          decorationColor: ColorsManager.darkBlue,
+                        ),
+                  ),
+                ),
+              ],
+            ),
 
             SizedBox(height: 40.h),
 
@@ -186,7 +171,7 @@ Spacer(),
     );
   }
 
-
+  /// 🔥 UPDATE EVENT + NOTIFICATION FIX
   void _updateEvent() async {
     if (_titleController.text.trim().isEmpty ||
         _descriptionController.text.trim().isEmpty) {
@@ -206,7 +191,28 @@ Spacer(),
 
     DialogUtils.showLoading(context);
 
+    // 🔴 1. cancel old notification
+    await NotificationService.cancelNotification(
+      widget.event.id.hashCode,
+    );
+
+    // 🟢 2. update firebase
     await FirebaseService.updateEvent(context, updatedEvent);
+
+    // 🔵 3. schedule new notification
+    DateTime reminderTime =
+        selectedDateTime.subtract(Duration(hours: 1));
+
+    if (reminderTime.isBefore(DateTime.now())) {
+      reminderTime = DateTime.now().add(Duration(seconds: 5));
+    }
+
+    await NotificationService.scheduleNotification(
+      id: updatedEvent.id.hashCode,
+      title: updatedEvent.title,
+      body: appLocalization.reminder,
+      scheduledTime: reminderTime,
+    );
 
     DialogUtils.hideDialog(context);
 

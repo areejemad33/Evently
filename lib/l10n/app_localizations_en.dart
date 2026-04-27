@@ -256,4 +256,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event_deleted => 'Event deleted successfully';
+
+  @override
+  String get reminder => 'This Event will start in one hour.';
 }

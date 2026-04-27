@@ -579,6 +579,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event deleted successfully'**
   String get event_deleted;
+
+  /// No description provided for @reminder.
+  ///
+  /// In en, this message translates to:
+  /// **'This Event will start in one hour.'**
+  String get reminder;
 }
 
 class _AppLocalizationsDelegate

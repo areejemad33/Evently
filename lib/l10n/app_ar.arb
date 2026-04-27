@@ -83,6 +83,7 @@
   "lets_start": "ابدأ الآن",
   "next": "التالي",
   "get_started": "ابدأ",
-    "event_deleted" : "تم مسح الحدث بنجاح "
+    "event_deleted" : "تم مسح الحدث بنجاح ",
+    "reminder" :"هذا الحدث سيبدأ خلال ساعه."
 
 }
